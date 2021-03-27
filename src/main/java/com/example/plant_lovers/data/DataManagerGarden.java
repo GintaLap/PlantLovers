@@ -4,22 +4,20 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataManagerUser {
-    private static final String connectionUrl = "jdbc:mysql://localhost:3306/plant_lovers?serverTimezone=UTC";
+public class DataManagerGarden {
+    private static final String conUrl = "jdbc:mysql://localhost:3306/plant_lovers?serverTimezone=UTC";
 
-
-    public Integer addUser(User user) {
+    public Integer addGarden(Garden garden) {
         Connection con = null;
 
         try {
             con = getConnection();
 
             var insertStat = con.prepareStatement(
-                    "insert into user (user_login, user_name, user_password) values (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                    "insert into garden (garden_user_id, garden_plant_id) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
 
-            insertStat.setString(1, user.getLogin());
-            insertStat.setString(2, user.getName());
-            insertStat.setString(3, user.getPassword());
+            insertStat.setInt(1, garden.getUser().getId());
+            insertStat.setInt(2, garden.getPlant().getId());
 
             insertStat.executeUpdate();
 
@@ -28,7 +26,7 @@ public class DataManagerUser {
             try (ResultSet keys = insertStat.getGeneratedKeys()) {
                 keys.next();
                 id = keys.getInt(1);
-                user.setId(id);
+                garden.setId(id);
             }
             con.close();
 
@@ -40,28 +38,27 @@ public class DataManagerUser {
         return null;
     }
 
-
-    public List<User> getUser() {
-        List<User> users = new ArrayList<>();
+    public List<Garden> getGarden(){
+        List<Garden> garden = new ArrayList<>();
 
         try {
             var con = getConnection();
-            var sat = con.createStatement();
-            var rs = sat.executeQuery("SELECT * FROM user");
+            var stmt = con.createStatement();
+            var rs = stmt.executeQuery("select * from v_garden_full_data");
 
             while (rs.next()) {
-                users.add(User.createUser(rs));
+                garden.add(Garden.createGarden(rs));
             }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return users;
-    }
 
+        return garden;
+    }
 
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(connectionUrl, "test", "test123");
+        return DriverManager.getConnection(conUrl, "test", "test123");
     }
 }
-
