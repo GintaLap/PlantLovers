@@ -13,8 +13,16 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
 
 
+    @GetMapping("/login/register")
+    public String getAddCity(Model model) {
+
+
+
+        return "login";
+    }
+
     //needs to do some fixing, not working at the moment
-    @PostMapping("/login")
+    @PostMapping("/login/register")
     public ModelAndView addUser(@ModelAttribute("addUserData") UserDTO dto) {
         var dm = new DataManagerUser();
 
@@ -22,7 +30,7 @@ public class UserController {
 
         dm.addUser(user);
 
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("login");
     }
 
 
@@ -33,6 +41,6 @@ public class UserController {
 
 
 
-        return null;
+        return new ModelAndView("your_garden");
     }
 }

@@ -23,22 +23,43 @@
 
     <section class="plants-container">
         <div class="plant">
-            <article class="plant">
+            <div class="plant">
                     <div th:each="plant: ${plants}">
-                    <b><span th:text="${plant.getName()}"></span></b>
-                    <img th:src="${plant.image()}" width="200" height="200"/>
-                    <a th:text="${plant.getScienceName()}"> Plant Scientific Name</a>
-                    <a th:text="${plant.getDescription()}"> Plant Description</a>
-                    <a th:text="${plant.getMoisture()}"> Plant moisture</a>
-                    <a th:text="${plant.getSunlight()}"> Plant sunlight</a>
-                    <a th:text="${plant.getWatering()}"> Plant watering</a>
-                    <a th:text="${plant.getPetToxic()}"> Plant pet toxic</a>
-                    <a th:text="${plant.getType()}"> Plant pet type</a>
-                    <a th:text="${plant.getBloom()}"> Plant bloom</a>
-                    <a th:text="${plant.getBloom()}"> Plant bloom</a>
-                    <a th:text="${plant.getHumidity()}"> Plant humidity</a>
+                        <div>
+                            <b><span th:text="${plant.getName()}"></span></b>
+                        </div>
+                        <div>
+                            <a th:text="${plant.getScienceName()}"> Plant Scientific Name</a>
+                        </div>
+                    <img th:src="${plant.image()}" width="300" height="300"/>
+                        <div>
+
+                            <a th:text="${plant.getDescription()}"> Plant Description</a>
+                        </div>
+                        <div>
+                            <a th:text="${plant.getMoisture()}"> Plant moisture</a>
+                        </div>
+                        <div>
+                            <a th:text="${plant.getSunlight()}"> Plant sunlight</a>
+                        </div>
+                        <div>
+                            <a th:text="${plant.getWatering()}"> Plant watering</a>
+                        </div>
+                        <div>
+                            <a th:text="${plant.getPetToxic()}"> Plant pet toxic</a>
+                        </div>
+                        <div>
+                            <a th:text="${plant.getType()}"> Plant type</a>
+                        </div>
+                        <div>
+                            <a th:text="${plant.getBloom()}"> Plant bloom</a>
+                        </div>
+                        <div>
+                            <a th:text="${plant.getHumidity()}"> Plant humidity</a>
+                        </div>
+
                     </div>
-            </article>
+            </div>
         </div>
     </section>
 </main>

@@ -21,5 +21,10 @@ public class PlantController {
         return "all_plants";
     }
 
+    @GetMapping("/about")
+    public String getAboutPage(Model model) {
 
+
+        return "about";
+    }
 }
