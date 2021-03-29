@@ -20,13 +20,11 @@ class PlantLoversApplicationTests {
     }
 
     @Test
-
     public void checking_adding_new_user(){
         var dm = new DataManagerUser();
         User user = new User(1,"ginta","ginta","2319412no2");
         dm.addUser(user);
     }
-
 
     @Test
     public void check_get_user() {
@@ -35,5 +33,14 @@ class PlantLoversApplicationTests {
         Assert.notEmpty(res);
         System.out.print(res);
     }
+
+    @Test
+    public void check_password(){
+        var dm = new DataManagerUser();
+        var users = dm.verifyUser("maija", "123456");
+        Assert.isTrue(users.size() > 0);
+        System.out.print(users);
+    }
+
 
 }

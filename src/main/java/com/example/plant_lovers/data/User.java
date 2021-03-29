@@ -3,11 +3,13 @@ package com.example.plant_lovers.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import java.sql.ResultSet;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class User {
     private Integer id;
     private String login;

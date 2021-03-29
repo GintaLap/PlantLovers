@@ -1,5 +1,9 @@
 package com.example.plant_lovers.data;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.junit.Test;
+import org.springframework.util.Assert;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +62,27 @@ public class DataManagerUser {
         return users;
     }
 
+
+    public List<User> verifyUser(String login, String password) {
+        List<User> users = new ArrayList<>();
+        try {
+            var con = getConnection();
+            PreparedStatement stat = con.prepareStatement("SELECT * FROM user where user_login = ? and user_password = ? ");
+
+            stat.setString(1, login);
+            stat.setString(2, password);
+            ResultSet rs = stat.executeQuery();
+
+            if (rs.next()) {
+                users.add(User.createUser(rs));
+            }else{
+                return null;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return users;
+    }
 
 
     private Connection getConnection() throws SQLException {
