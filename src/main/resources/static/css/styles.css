@@ -1,0 +1,231 @@
+/* GENERAL STYLES */
+@font-face {
+    font-family: 'playfair_displayregular';
+    src: url('playfairdisplay-variablefont_wght-webfont.woff2') format('woff2'),
+    url('playfairdisplay-variablefont_wght-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    line-height: 1.6;
+    letter-spacing: 1.1px;
+}
+
+/* HEADER */
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+@media only screen and (min-width: 850px) {
+    .nav {
+        padding: 20px 100px;
+    }
+}
+
+
+
+@media only screen and (min-width: 850px) {
+    .logo {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navigation .link {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #7a7a7a;
+    margin-right: 15px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.navigation .link:hover {
+    color: black;
+}
+
+.navigation .link:last-of-type {
+    margin-right: 0;
+}
+/* HEADER */
+
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+
+/* INTRO */
+.intro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 0 30px;
+    text-align: center;
+}
+
+@media only screen and (min-width: 850px) {
+    .nav {
+        padding: 0 150px;
+    }
+}
+
+.intro .heading {
+    font-family: 'playfair_displayregular';
+    font-size: 35px;
+    color: black;
+}
+
+@media only screen and (min-width: 850px) {
+    .intro .heading {
+        font-size: 50px;
+    }
+}
+
+.intro .text {
+    color: #7a7a7a;
+    font-size: 18px;
+    border-bottom: 1px solid #7a7a7a;
+    padding-bottom: 50px;
+    max-width: 700px;
+}
+/* INTRO */
+
+/* Plants */
+.plants-container {
+    max-width: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.plants-container .heading {
+    font-size: 25px;
+    color: black;
+    text-transform: uppercase;
+}
+
+@media only screen and (min-width: 850px) {
+    .plants-container .heading  {
+        font-size: 35px;
+    }
+}
+
+.plant {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px 20px;
+    width: 100%;
+}
+
+.plant {
+    max-height: 500px;
+}
+
+.plant .image {
+    width: 250px;
+    height: 250px;
+    position: relative;
+    display: block;
+    object-fit: cover;
+}
+
+@media only screen and (min-width: 850px) {
+    .plant .image  {
+        width: 500px;
+        height: 500px;
+    }
+}
+
+.plant .link {
+    position: relative;
+    display: table-cell;
+}
+.plant .title {
+    font-family: 'playfair_displayregular';
+    color: white;
+    font-size: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    text-shadow: 2px 1px black;
+}
+
+
+/* Style all input fields */
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
+
+/* Style the submit button */
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Style the container for inputs */
+.container {
+    background-color: #f1f1f1;
+    padding: 20px;
+}
+
+/* The message box is shown when the user clicks on the password field */
+#message {
+    display:none;
+    background: #f1f1f1;
+    color: #000;
+    position: relative;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+#message p {
+    padding: 10px 35px;
+    font-size: 18px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+    color: green;
+}
+
+.valid:before {
+    position: relative;
+    left: -35px;
+    content: "&#10004;";
+}
+
+/* Add a red text color and an "x" icon when the requirements are wrong */
+.invalid {
+    color: red;
+}
+
+.invalid:before {
+    position: relative;
+    left: -35px;
+    content: "&#10006;";
+}
+/* RECIPES */

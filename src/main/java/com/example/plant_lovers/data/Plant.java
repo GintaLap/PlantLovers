@@ -20,6 +20,7 @@ public class Plant {
     private int watering;
     private String petToxic;
     private String type;
+    private String bloom;
     private String humidity;
 
     @SneakyThrows
@@ -35,8 +36,12 @@ public class Plant {
                 rs.getInt("plant_watering"),
                 rs.getString("plant_toxic"),
                 rs.getString("plant_type"),
+                rs.getString("plant_bloom"),
                 rs.getString("plant_humidity"));
         return plant;
+    }
+    public String image(){
+        return "./img/"+imageId+ ".jpg";
     }
 
 }
