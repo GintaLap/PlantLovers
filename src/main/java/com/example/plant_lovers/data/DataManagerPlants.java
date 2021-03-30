@@ -1,37 +1,36 @@
 package com.example.plant_lovers.data;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataManagerPlants {
-    private static final String conUrl = "jdbc:mysql://localhost:3306/plant_lovers?serverTimezone=UTC";
+    private static SessionFactory factory;
 
-
-    public List<Plant> getPlants() {
-        List<Plant> plants = new ArrayList<>();
-
+    public DataManagerPlants() {
         try {
-            var con = getConnection();
-            var stmt = con.createStatement();
-            var rs = stmt.executeQuery("select * from plants");
-
-            while (rs.next()) {
-                plants.add(Plant.createPlant(rs));
-            }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            factory = new Configuration()
+                    .configure()
+                    .addAnnotatedClass(Plant.class)
+                    .buildSessionFactory();
+        } catch (Throwable ex) {
+            System.err.println("Failed to create sessionFactory object." + ex);
+            throw new ExceptionInInitializerError(ex);
         }
-
-        return plants;
     }
 
-
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(conUrl, "test", "test123");
+    public List<User> getPlants() {
+        var session = factory.openSession();
+        try {
+            return session.createQuery("FROM Plant").list();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return new ArrayList<>();
     }
 }

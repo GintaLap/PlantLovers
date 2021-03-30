@@ -1,64 +1,55 @@
 package com.example.plant_lovers.data;
 
-import java.sql.*;
+import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class DataManagerGarden {
-    private static final String conUrl = "jdbc:mysql://localhost:3306/plant_lovers?serverTimezone=UTC";
+    private static SessionFactory factory;
 
-    public Integer addGarden(Garden garden) {
-        Connection con = null;
-
+    public DataManagerGarden() {
         try {
-            con = getConnection();
-
-            var insertStat = con.prepareStatement(
-                    "insert into garden (garden_user_id, garden_plant_id) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
-
-            insertStat.setInt(1, garden.getUser().getId());
-            insertStat.setInt(2, garden.getPlant().getId());
-
-            insertStat.executeUpdate();
-
-            Integer id = 0;
-
-            try (ResultSet keys = insertStat.getGeneratedKeys()) {
-                keys.next();
-                id = keys.getInt(1);
-                garden.setId(id);
-            }
-            con.close();
-
-            return id;
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            factory = new Configuration()
+                    .configure()
+                    .addAnnotatedClass(Garden.class)
+                    .buildSessionFactory();
+        } catch (Throwable ex) {
+            System.err.println("Failed to create sessionFactory object." + ex);
+            throw new ExceptionInInitializerError(ex);
         }
-        return null;
     }
 
-    public List<Garden> getGarden(){
-        List<Garden> garden = new ArrayList<>();
-
+    public void addGarden(Object item) {
+        var session = factory.openSession();
+        Transaction tx = null;
         try {
-            var con = getConnection();
-            var stmt = con.createStatement();
-            var rs = stmt.executeQuery("select * from v_garden_full_data");
-
-            while (rs.next()) {
-                garden.add(Garden.createGarden(rs));
+            tx = session.beginTransaction();
+            session.save(item);
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
             }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.err.println(ex);
+        } finally {
+            session.close();
         }
-
-        return garden;
     }
 
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(conUrl, "test", "test123");
+    public List<Garden> getGarden() {
+        var session = factory.openSession();
+        try {
+            return session.createQuery("FROM v_garden_full_data").list(); // v_garden_full_data
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return new ArrayList<>();
     }
 }

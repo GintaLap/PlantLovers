@@ -2,24 +2,22 @@ package com.example.plant_lovers.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.SneakyThrows;
+import lombok.NoArgsConstructor;
 
-import java.sql.ResultSet;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "garden")
 public class Garden {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "garden_id")
     private Integer id;
-    private User user;
-    private Plant plant;
-
-    @SneakyThrows
-    public static Garden createGarden(ResultSet rs){
-
-        var garden = new Garden(rs.getInt("garden_id"),
-                User.createUser(rs),
-                Plant.createPlant(rs));
-        return garden;
-    }
-
+    @Column(name = "garden_user_id")
+    private Integer userId;
+    @Column(name = "garden_plant_id")
+    private Integer plantId;
 }

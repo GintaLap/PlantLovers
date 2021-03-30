@@ -1,30 +1,28 @@
 package com.example.plant_lovers.data;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
-import java.sql.ResultSet;
+
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "user")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Integer id;
+    @Column(name = "user_email")
+    private String email;
+    @Column(name = "user_login")
     private String login;
+    @Column(name = "user_name")
     private String name;
+    @Column(name = "user_password")
     private String password;
 
-
-    @SneakyThrows
-    public static User createUser(ResultSet rs) {
-
-        var user = new User(rs.getInt("user_id"),
-                rs.getString("user_login"),
-                rs.getString("user_name"),
-                rs.getString("user_password"));
-
-        return user;
-    }
 }

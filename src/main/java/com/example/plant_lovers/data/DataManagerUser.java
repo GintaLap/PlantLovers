@@ -1,92 +1,83 @@
 package com.example.plant_lovers.data;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.junit.Test;
-import org.springframework.util.Assert;
+import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
-import java.sql.*;
+import org.hibernate.query.Query;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataManagerUser {
-    private static final String connectionUrl = "jdbc:mysql://localhost:3306/plant_lovers?serverTimezone=UTC";
+    private static SessionFactory factory;
+
+    public DataManagerUser() {
+        try {
+            factory = new Configuration()
+                    .configure()
+                    .addAnnotatedClass(User.class)
+                    .buildSessionFactory();
+        } catch (Throwable ex) {
+            System.err.println("Failed to create sessionFactory object." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
 
 
-    public Integer addUser(User user) {
-        Connection con = null;
+    public void addUser(Object item) {
+        var session = factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.save(item);
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+    }
+
+    public List<User> getUsers() {
+        var session = factory.openSession();
+        try {
+            return session.createQuery("FROM User").list();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return new ArrayList<>();
+    }
+
+    public User login(String email, String password) {
+        var session = factory.openSession();
 
         try {
-            con = getConnection();
+            String hql = "FROM User U WHERE U.email = :uEmail and U.password = :uPassword";
+            Query query = session.createQuery(hql);
 
-            var insertStat = con.prepareStatement(
-                    "insert into user (user_login, user_name, user_password) values (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            query.setParameter("uEmail", email);
+            query.setParameter("uPassword", password);
+            var results = query.list();
 
-            insertStat.setString(1, user.getLogin());
-            insertStat.setString(2, user.getName());
-            insertStat.setString(3, user.getPassword());
-
-            insertStat.executeUpdate();
-
-            Integer id = 0;
-
-            try (ResultSet keys = insertStat.getGeneratedKeys()) {
-                keys.next();
-                id = keys.getInt(1);
-                user.setId(id);
+            if (results.size() > 0) {
+                return (User) results.get(0);
             }
-            con.close();
-
-            return id;
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
         }
+
         return null;
     }
 
-
-    public List<User> getUser() {
-        List<User> users = new ArrayList<>();
-
-        try {
-            var con = getConnection();
-            var sat = con.createStatement();
-            var rs = sat.executeQuery("SELECT * FROM user");
-
-            while (rs.next()) {
-                users.add(User.createUser(rs));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return users;
-    }
-
-
-    public List<User> verifyUser(String login, String password) {
-        List<User> users = new ArrayList<>();
-        try {
-            var con = getConnection();
-            PreparedStatement stat = con.prepareStatement("SELECT * FROM user where user_login = ? and user_password = ? ");
-
-            stat.setString(1, login);
-            stat.setString(2, password);
-            ResultSet rs = stat.executeQuery();
-
-            if (rs.next()) {
-                users.add(User.createUser(rs));
-            }else{
-                return null;
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return users;
-    }
-
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(connectionUrl, "test", "test123");
-    }
 }
+
 
