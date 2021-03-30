@@ -5,6 +5,7 @@
     <title>Your Garden</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="icon" href="img/icon.png" type="image/jpg" sizes="16x16">
 </head>
 <body>
 <nav class="navigation">
@@ -13,15 +14,31 @@
         <a class="link" href="/all_plants">All Plants</a>
         <a class="link" href="/your_garden">Your Garden</a>
         <a class="link" href="/about">About</a>
+        <a class="link" href="/login">Login</a>
     </div>
 </nav>
+
+
 <main class="content">
     <section class="intro">
         <h1 class="heading">Your garden</h1>
-    </section>
-    <p>
 
-    </p>
+<!--    </section>-->
+<!--    <h1 th:text="${user.getName()}"></h1>-->
+
+<!--    <ul>-->
+<!--        <li th:each="plant: ${plants}">-->
+<!--            <a th:href="${plant.getId()}" th:text="${plant.getName()}"></a>-->
+<!--        </li>-->
+<!--    </ul>-->
+
+<!--    <tr th:each="plant: ${plants.getId()}">-->
+<!--        <td class="plant" th:text="${plant.getName()}"></td>-->
+<!--        <td class="plant" th:text="${plant.getWatering()}"></td>-->
+<!--    </tr>-->
+
 </main>
+
+
 </body>
 </html>

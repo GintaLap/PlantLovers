@@ -5,21 +5,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
 
 
 @Controller
 public class UserController {
 
 
-    @GetMapping("/login/register")
-    public String getAddCity(Model model) {
+    @GetMapping("/login")
+    public String toLogIn(Model model) {
+        String login = "";
+        String password = "";
+        var dmu = new DataManagerUser();
+        var user =  dmu.verifyUser(login, password);
 
-
+        model.addAttribute("user" , user);
+        var dmp = new DataManagerPlants();
+        var plant = dmp.getPlants();
+        model.addAttribute("plant", plant);
 
         return "login";
     }
+
+
 
     //needs to do some fixing, not working at the moment
     @PostMapping("/login/register")
@@ -42,5 +54,13 @@ public class UserController {
 
 
         return new ModelAndView("your_garden");
+    }
+
+
+    @GetMapping("/home")
+    public String back(Model model) {
+
+
+        return "index";
     }
 }

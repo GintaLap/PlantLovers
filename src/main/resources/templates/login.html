@@ -4,9 +4,42 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" href="static/css/login.css">
+    <link rel="icon" href="img/icon.png" type="image/jpg" sizes="16x16">
 </head>
 <body>
-<div th:replace="navigation :: navigation"></div>
+
+<nav class="navigation">
+    <div class="links">
+        <a class="link" href="/home/">Home</a>
+        <a class="link" href="/all_plants">All Plants</a>
+        <a class="link" href="/your_garden">Your Garden</a>
+        <a class="link" href="/about">About</a>
+        <a class="link" href="/login">Login</a>
+    </div>
+</nav>
+
+<h2>Log in</h2>
+<form name="LogInAcc" id="LogInAcc" method="post" action="/login">
+<div>
+    <label>Login</label>
+    <input type="text" name="uLogin" id="uLogin" required>
+</div>
+
+<label>Password</label>
+<input type="password" name="uPassword" id="uPassword" required>
+<input type="submit" value="Enter garden">
+</form>
+
+<ul>
+    <li th:each="us: ${user}">
+        <a th:href="${'/us/' + us}" th:text="${us.getName()}"></a>
+    </li>
+</ul>
+<br>
+
+
+<h2>Create new account</h2>
+
 <div class="container">
     <form action="/login">
         <label for="uLogin">Login</label>
@@ -90,5 +123,15 @@
         }
     }
 </script>
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
