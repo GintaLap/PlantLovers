@@ -19,7 +19,7 @@
     <div class="links">
         <a class="link" href="/home/">Home</a>
         <a class="link" href="/all_plants">All Plants</a>
-        <a class="link" href="/your_garden">Your Garden</a>
+
         <a class="link" href="/about">About</a>
         <a class="link" href="/login">Login</a>
     </div>
@@ -33,7 +33,7 @@
         <div class="col">
         </div>
         <div class="col">
-            <form name="dto" id="dto" method="post" action="/your_garden">
+            <form name="udto" id="udto" method="post" action="/your_garden">
                 <div class="mb-3">
                     <label for="uEmail" class="form-label">Email address</label>
                     <input type="email" class="form-control" id="uEmail" name="uEmail">
@@ -44,8 +44,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>
-            <div th:if="${hasError}" class="alert alert-danger container-with-top-margin" role="alert"
-                 th:text="${error}">
+            <div th:if="${hasError}" class="alert alert-danger container-with-top-margin" role="alert" th:text="${error}">
             </div>
         </div>
         <div class="col">
