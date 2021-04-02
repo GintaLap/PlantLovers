@@ -53,7 +53,7 @@ public class UserController {
     public String register(UserDTO dto, Model model) {
         var user = new User(0, dto.getUEmail(), dto.getULogin(), dto.getUName(), dto.getUPassword());
         dm.addUser(user);
-        return "login";
+        return "register_success"; //  return "your_garden";
     }
 
 
