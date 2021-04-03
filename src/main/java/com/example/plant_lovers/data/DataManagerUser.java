@@ -1,10 +1,13 @@
 package com.example.plant_lovers.data;
 
+import com.example.plant_lovers.dto.UserDTO;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
@@ -18,6 +21,8 @@ public class DataManagerUser {
             factory = new Configuration()
                     .configure()
                     .addAnnotatedClass(User.class)
+//                    .addAnnotatedClass(Plant.class)
+//                    .addAnnotatedClass(Garden.class)
                     .buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);
@@ -25,8 +30,7 @@ public class DataManagerUser {
         }
     }
 
-
-    public void addUser(Object item) {
+    public void addUser(Object item) { //original
         var session = factory.openSession();
         Transaction tx = null;
         try {

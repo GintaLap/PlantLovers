@@ -49,12 +49,26 @@ public class UserController {
         return "your_garden";
     }
 
-    @PostMapping("/process_register")
+
+    @PostMapping("/process_register") //MY COMMENT: Registers once unique user but does not show that double is not registered
     public String register(UserDTO dto, Model model) {
         var user = new User(0, dto.getUEmail(), dto.getULogin(), dto.getUName(), dto.getUPassword());
-        dm.addUser(user);
-        return "register_success"; //  return "your_garden";
+
+        if (user.getEmail().equalsIgnoreCase(dto.getUEmail())) {
+            dm.addUser(user);
+            return "register_success";
+        }
+        model.addAttribute("error", "Unable to register");
+        model.addAttribute("hasMistake", true);
+        return "login";
     }
+
+//    @PostMapping("/process_register") // MY COMMENT: original method
+//    public String register(UserDTO dto, Model model) {
+//        var user = new User(0, dto.getUEmail(), dto.getULogin(), dto.getUName(), dto.getUPassword());
+//        dm.addUser(user);
+//        return "register_success"; //  return "your_garden";
+//    }
 
 
 //    @GetMapping("/your_garden")

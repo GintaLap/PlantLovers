@@ -73,8 +73,12 @@
                required>
 
         <button type="submit" class="btn btn-primary">Sign Up</button>
+        <div th:if="${hasMistake}" class="alert alert-danger container-with-top-margin" role="alert" th:text="${error}">
+        </div>
     </form>
+
 </div>
+
 
 <div id="message">
     <h3>Password must contain the following:</h3>

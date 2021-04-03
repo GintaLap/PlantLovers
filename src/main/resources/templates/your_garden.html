@@ -12,9 +12,7 @@
     <div class="links">
         <a class="link" href="/home/">Home</a>
         <a class="link" href="/all_plants">All Plants</a>
-        <a class="link" href="/your_garden">Your Garden</a>
         <a class="link" href="/about">About</a>
-        <a class="link" href="/login">Login</a>
     </div>
 </nav>
 
@@ -22,11 +20,10 @@
 <main class="content">
 <!--    <section class="intro">-->
         <h1 class="heading">Your garden</h1>
-<!--        <h1 th:text="${user.getName()}"></h1>-->
-<!--    <h2 th:text="${user.getUsers().get(0)}"></h2>-->
+        <h1 th:text="${'Welcome to your garden ' + user.getName() + '!'}"></h1>
+   <h2>Check out your garden:</h2>
 <!--        <h2 th:text="${myGarden.getGarden()}"></h2>-->
 <!--    </section>-->
-<!--    <h1 th:text="${user.getName()}"></h1>-->
 
 <!--    <ul>-->
 <!--        <li th:each="plant: ${plants}">-->
