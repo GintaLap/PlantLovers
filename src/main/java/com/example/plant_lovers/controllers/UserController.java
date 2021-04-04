@@ -53,18 +53,18 @@ public class UserController {
     }
 
 
-//    @PostMapping("/process_register")
-//    public String register(UserDTO dto, Model model) {
-//        var user = new User(0, dto.getUEmail(), dto.getULogin(), dto.getUName(), dto.getUPassword());
-//
-//        if (!user.getEmail().equalsIgnoreCase(dto.getUEmail())) {
-//            dm.addUser(user);
-//            return "register_success";
-//        }
-//        model.addAttribute("error", "E-mail already been registered");
-//        model.addAttribute("hasMistake", true);
-//        return "login";
-//    }
+    @PostMapping("/process_register")
+    public String register(UserDTO dto, Model model) {
+        var user = new User(0, dto.getUEmail(), dto.getULogin(), dto.getUName(), dto.getUPassword());
+
+        if (!user.getEmail().equalsIgnoreCase(dto.getUEmail())) {
+            dm.addUser(user);
+            return "register_success";
+        }
+        model.addAttribute("error", "E-mail already been registered");
+        model.addAttribute("hasMistake", true);
+        return "login";
+    }
 
 
 //    @GetMapping("/your_garden")
