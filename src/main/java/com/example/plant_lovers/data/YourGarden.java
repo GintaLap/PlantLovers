@@ -3,17 +3,27 @@ package com.example.plant_lovers.data;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 @Entity
-@Table(name = "plants")
-public class Plant {
+@Immutable
+//@Table(name = "v_garden_full_data")
+public class YourGarden {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "garden_id")
+    private Integer gardenId;
+    @Column(name = "garden_user_id")
+    private Integer userId;
+    @Column(name = "garden_plant_id")
+    private Integer plantId;
+    @Column(name = "user_email")
+    private String email;
     @Column(name = "plant_id")
     private int id;
     @Column(name = "plant_image_id")
@@ -38,11 +48,5 @@ public class Plant {
     private String bloom;
     @Column(name = "plant_humidity")
     private String humidity;
-
-
-
-    public String image() {
-        return "./img/" + imageId + ".jpg";
-    }
 
 }

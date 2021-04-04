@@ -20,4 +20,6 @@ public class Garden {
     private Integer userId;
     @Column(name = "garden_plant_id")
     private Integer plantId;
+
+
 }

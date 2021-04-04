@@ -19,7 +19,6 @@
     <div class="links">
         <a class="link" href="/home/">Home</a>
         <a class="link" href="/all_plants">All Plants</a>
-
         <a class="link" href="/about">About</a>
         <a class="link" href="/login">Login</a>
     </div>
@@ -44,7 +43,8 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>
-            <div th:if="${hasError}" class="alert alert-danger container-with-top-margin" role="alert" th:text="${error}">
+            <div th:if="${hasError}" class="alert alert-danger container-with-top-margin" role="alert"
+                 th:text="${error}">
             </div>
         </div>
         <div class="col">

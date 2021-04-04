@@ -1,5 +1,6 @@
 package com.example.plant_lovers.controllers;
 
+import com.example.plant_lovers.SesstionData.SessionData;
 import com.example.plant_lovers.data.*;
 import com.example.plant_lovers.dto.UserDTO;
 import org.springframework.stereotype.Controller;
@@ -37,38 +38,33 @@ public class UserController {
             model.addAttribute("hasError", true);
             return "login";
         }
-        request.getSession().setAttribute("User", user);
+        request.getSession().setAttribute(SessionData.User, user);
         model.addAttribute("user", user);
         return "your_garden";
     }
 
     @GetMapping("/your_garden")
     public String getGarden(Model model, HttpSession session) {
-       var user = (User)session.getAttribute("User");
+       var user = (User)session.getAttribute(SessionData.User);
         model.addAttribute("user", user);
+
+
         return "your_garden";
     }
 
 
-    @PostMapping("/process_register") //MY COMMENT: Registers once unique user but does not show that double is not registered
+    @PostMapping("/process_register")
     public String register(UserDTO dto, Model model) {
         var user = new User(0, dto.getUEmail(), dto.getULogin(), dto.getUName(), dto.getUPassword());
 
-        if (user.getEmail().equalsIgnoreCase(dto.getUEmail())) {
+        if (!user.getEmail().equalsIgnoreCase(dto.getUEmail())) {
             dm.addUser(user);
             return "register_success";
         }
-        model.addAttribute("error", "Unable to register");
+        model.addAttribute("error", "E-mail already been registered");
         model.addAttribute("hasMistake", true);
         return "login";
     }
-
-//    @PostMapping("/process_register") // MY COMMENT: original method
-//    public String register(UserDTO dto, Model model) {
-//        var user = new User(0, dto.getUEmail(), dto.getULogin(), dto.getUName(), dto.getUPassword());
-//        dm.addUser(user);
-//        return "register_success"; //  return "your_garden";
-//    }
 
 
 //    @GetMapping("/your_garden")

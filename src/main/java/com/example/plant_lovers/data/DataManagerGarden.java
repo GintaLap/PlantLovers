@@ -41,10 +41,11 @@ public class DataManagerGarden {
         }
     }
 
-    public List<Garden> getGarden() {
+    public List<YourGarden> getGarden() {
+
         var session = factory.openSession();
         try {
-            return session.createQuery("FROM v_garden_full_data").list(); // v_garden_full_data
+            return session.createQuery("FROM Garden ").list();
         } catch (HibernateException ex) {
             System.err.println(ex);
         } finally {
