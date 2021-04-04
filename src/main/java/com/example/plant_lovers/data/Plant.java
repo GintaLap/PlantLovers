@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -39,6 +40,18 @@ public class Plant {
     @Column(name = "plant_humidity")
     private String humidity;
 
+
+
+
+
+    //One approach
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "plant")
+//    private List<Garden> gardens;
+
+
+// Second approach
+//    @OneToOne(mappedBy = "plants")
+//    private User user;
 
 
     public String image() {

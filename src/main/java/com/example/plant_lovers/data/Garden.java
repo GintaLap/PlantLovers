@@ -22,4 +22,12 @@ public class Garden {
     private Integer plantId;
 
 
+//    One approach
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "garden_user_id")
+//    private User user;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "garden_plant_id")
+//    private Plant plant;
 }

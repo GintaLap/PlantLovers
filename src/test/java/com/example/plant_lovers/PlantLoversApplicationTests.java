@@ -16,12 +16,12 @@ class PlantLoversApplicationTests {
 
     }
 
-    @Test
-    public void checking_adding_new_user(){
-        var dm = new DataManagerUser();
-        User user = new User(1,"ginta@gmail.lv","gintala","Ginta","2319412no2");
-        dm.addUser(user);
-    }
+//    @Test
+//    public void checking_adding_new_user(){
+//        var dm = new DataManagerUser();
+//        User user = new User(1,"ginta@gmail.lv","gintala","Ginta","2319412no2");
+//        dm.addUser(user);
+//    }
 
     @Test
     public void check_get_user() {

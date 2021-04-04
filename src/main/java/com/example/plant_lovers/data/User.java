@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,4 +26,18 @@ public class User {
     @Column(name = "user_password")
     private String password;
 
+
+
+//    One approach
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+//    private List<Garden> gardens;
+
+    // Second approach
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinTable(name = "garden",
+//            joinColumns =
+//                    { @JoinColumn(name = "garden_user_id", referencedColumnName = "user_id") },
+//            inverseJoinColumns =
+//                    { @JoinColumn(name = "garden_plant_id", referencedColumnName = "plant_id") })
+//    private Plant plant;
 }

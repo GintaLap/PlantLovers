@@ -12,7 +12,7 @@ import javax.persistence.*;
 //@NoArgsConstructor
 @Entity
 @Immutable
-//@Table(name = "v_garden_full_data")
+@Table(name = "v_garden_full_data")
 public class YourGarden {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
