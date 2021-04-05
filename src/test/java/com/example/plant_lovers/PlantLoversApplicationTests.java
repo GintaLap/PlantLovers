@@ -3,6 +3,7 @@ package com.example.plant_lovers;
 import com.example.plant_lovers.data.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import org.springframework.util.Assert;
 
 @SpringBootTest
@@ -38,6 +39,17 @@ class PlantLoversApplicationTests {
         Assert.isTrue(garden.size() > 0);
         System.out.print(garden);
     }
-
+//    @Test
+//    public void decoding(){
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//      String orig = "ABC123abc";
+//     String code = encoder.encode(orig);
+//        System.out.println(code);
+//       if(encoder.matches(orig, code)){
+//           System.out.println("yes");
+//       }else{
+//           System.out.println("No");
+//       }
+//   }
 
 }

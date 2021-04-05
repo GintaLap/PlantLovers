@@ -3,6 +3,7 @@ package com.example.plant_lovers.controllers;
 import com.example.plant_lovers.SesstionData.SessionData;
 import com.example.plant_lovers.data.*;
 import com.example.plant_lovers.dto.UserDTO;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
-
     private DataManagerUser dm;
 
     public UserController() {
@@ -45,27 +45,32 @@ public class UserController {
 
     @GetMapping("/your_garden")
     public String getGarden(Model model, HttpSession session) {
-       var user = (User)session.getAttribute(SessionData.User);
+        var user = (User) session.getAttribute(SessionData.User);
         model.addAttribute("user", user);
 
 
         return "your_garden";
     }
 
-
     @PostMapping("/process_register")
     public String register(UserDTO dto, Model model) {
-        var user = new User(0, dto.getUEmail(), dto.getULogin(), dto.getUName(), dto.getUPassword());
+        var newUser = new User(0, dto.getUEmail(), dto.getULogin(), dto.getUName(), dto.getUPassword());
 
-        if (!user.getEmail().equalsIgnoreCase(dto.getUEmail())) {
-            dm.addUser(user);
+        var users = dm.getUsers().stream().
+                filter(u -> u.getEmail().equalsIgnoreCase(dto.getUEmail())).findFirst();
+
+        if (!users.isPresent()) {
+//            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//            String encodedPassword = passwordEncoder.encode(user.getPassword());
+            dm.addUser(newUser);
+
             return "register_success";
         }
+
         model.addAttribute("error", "E-mail already been registered");
         model.addAttribute("hasMistake", true);
         return "login";
     }
-
 
 //    @GetMapping("/your_garden")
 //    public String addGarden(Model model) {
@@ -81,8 +86,14 @@ public class UserController {
 
     @GetMapping("/home")
     public String getIndex(Model model) {
-        model.addAttribute("error","");
+        model.addAttribute("error", "");
         model.addAttribute("hasError", false);
         return "index";
     }
 }
+
+
+
+
+
+
