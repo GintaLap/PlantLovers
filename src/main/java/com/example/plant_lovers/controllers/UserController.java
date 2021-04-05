@@ -4,6 +4,7 @@ import com.example.plant_lovers.SesstionData.SessionData;
 import com.example.plant_lovers.data.*;
 import com.example.plant_lovers.dto.UserDTO;
 
+import com.example.plant_lovers.security.Password;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ public class UserController {
         dm = new DataManagerUser();
     }
 
+
     @GetMapping("/login")
     public String getLogin(Model model) {
         model.addAttribute("error", "");
@@ -31,26 +33,22 @@ public class UserController {
     @PostMapping("/login")
     public String login(UserDTO udto, Model model, HttpServletRequest request) {
 
-        var user = dm.login(udto.getUEmail(), udto.getUPassword());
 
-        if (user == null) {
+        var user = dm.login(udto.getUEmail());
+        //var hashedP = Password.hashPassword(udto.getUPassword());
+        if(!Password.checkPassword(udto.getUPassword(), user.getPassword()) || user ==null){
+
             model.addAttribute("error", "Unable to login");
             model.addAttribute("hasError", true);
             return "login";
         }
+
         request.getSession().setAttribute(SessionData.User, user);
         model.addAttribute("user", user);
         return "your_garden";
     }
 
-    @GetMapping("/your_garden")
-    public String getGarden(Model model, HttpSession session) {
-        var user = (User) session.getAttribute(SessionData.User);
-        model.addAttribute("user", user);
 
-
-        return "your_garden";
-    }
 
     @PostMapping("/process_register")
     public String register(UserDTO dto, Model model) {
@@ -60,8 +58,9 @@ public class UserController {
                 filter(u -> u.getEmail().equalsIgnoreCase(dto.getUEmail())).findFirst();
 
         if (!users.isPresent()) {
-//            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//            String encodedPassword = passwordEncoder.encode(user.getPassword());
+
+            newUser.setPassword(Password.hashPassword(newUser.getPassword()));
+
             dm.addUser(newUser);
 
             return "register_success";
@@ -72,6 +71,15 @@ public class UserController {
         return "login";
     }
 
+
+    @GetMapping("/your_garden")
+    public String getGarden(Model model, HttpSession session) {
+        var user = (User) session.getAttribute(SessionData.User);
+        model.addAttribute("user", user);
+
+
+        return "your_garden";
+    }
 //    @GetMapping("/your_garden")
 //    public String addGarden(Model model) {
 //        var dmg = new DataManagerGarden();
