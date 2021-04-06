@@ -8,10 +8,9 @@ import org.hibernate.annotations.Immutable;
 import javax.persistence.*;
 
 @Data
-//@AllArgsConstructor
-//@NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Immutable
 @Table(name = "v_garden_full_data")
 public class YourGarden {
     @Id

@@ -16,18 +16,12 @@ public class Garden {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "garden_id")
     private Integer id;
-    @Column(name = "garden_user_id")
-    private Integer userId;
-    @Column(name = "garden_plant_id")
-    private Integer plantId;
 
+    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "garden_user_id",referencedColumnName = "user_id")
+    private User user;
 
-//    One approach
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "garden_user_id")
-//    private User user;
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "garden_plant_id")
-//    private Plant plant;
+    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "garden_plant_id",referencedColumnName = "plant_id")
+    private Plant plant;
 }

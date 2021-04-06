@@ -17,6 +17,8 @@ public class DataManagerGarden {
             factory = new Configuration()
                     .configure()
                     .addAnnotatedClass(Garden.class)
+                    .addAnnotatedClass(User.class)
+                    .addAnnotatedClass(Plant.class)
                     .buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);

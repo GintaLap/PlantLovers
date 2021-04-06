@@ -1,6 +1,5 @@
 package com.example.plant_lovers.data;
 
-import com.example.plant_lovers.controllers.UserController;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
@@ -21,8 +20,6 @@ public class DataManagerUser {
             factory = new Configuration()
                     .configure()
                     .addAnnotatedClass(User.class)
-//                    .addAnnotatedClass(Plant.class)
-//                    .addAnnotatedClass(Garden.class)
                     .buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);

@@ -22,7 +22,7 @@ public class DataManagerPlants {
         }
     }
 
-    public List<User> getPlants() {
+    public List<Plant> getPlants() {
         var session = factory.openSession();
         try {
             return session.createQuery("FROM Plant").list();

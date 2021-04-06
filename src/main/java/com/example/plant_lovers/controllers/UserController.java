@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
     private DataManagerUser dm;
+    private DataManagerGarden dmg;
+    private DataManagerPlants dmp;
 
     public UserController() {
         dm = new DataManagerUser();
+        dmg = new DataManagerGarden();
+        dmp = new DataManagerPlants();
     }
 
 
@@ -33,10 +38,9 @@ public class UserController {
     @PostMapping("/login")
     public String login(UserDTO udto, Model model, HttpServletRequest request) {
 
-
         var user = dm.login(udto.getUEmail());
-        //var hashedP = Password.hashPassword(udto.getUPassword());
-        if(!Password.checkPassword(udto.getUPassword(), user.getPassword()) || user ==null){
+
+        if (!Password.checkPassword(udto.getUPassword(), user.getPassword()) || user == null) {
 
             model.addAttribute("error", "Unable to login");
             model.addAttribute("hasError", true);
@@ -47,7 +51,6 @@ public class UserController {
         model.addAttribute("user", user);
         return "your_garden";
     }
-
 
 
     @PostMapping("/process_register")
@@ -74,9 +77,32 @@ public class UserController {
 
     @GetMapping("/your_garden")
     public String getGarden(Model model, HttpSession session) {
+
+        var plant = dmp.getPlants();
+
         var user = (User) session.getAttribute(SessionData.User);
         model.addAttribute("user", user);
 
+
+        var myGarden = dmg.getGarden().stream().
+                filter(g-> (g.getUserId().equals(user.getId()))).findFirst();
+        var myPlants = myGarden.stream()
+                .map(p -> new Plant(
+                        p.getPlantId(),
+                        p.getImageId(),
+                        p.getScienceName(),
+                        p.getName(),
+                        p.getDescription(),
+                        p.getMoisture(),
+                        p.getSunlight(),
+                        p.getWatering(),
+                        p.getPetToxic(),
+                        p.getType(),
+                        p.getBloom(),
+                        p.getHumidity()))
+                        .collect(Collectors.toList());
+
+        model.addAttribute("myPlants", myPlants);
 
         return "your_garden";
     }
