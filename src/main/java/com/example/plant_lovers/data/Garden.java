@@ -17,11 +17,11 @@ public class Garden {
     @Column(name = "garden_id")
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "garden_user_id",referencedColumnName = "user_id")
-    private User user;
+    @Column(name = "garden_user_id")
+    private Integer userId;
 
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "garden_plant_id",referencedColumnName = "plant_id")
     private Plant plant;
+
 }

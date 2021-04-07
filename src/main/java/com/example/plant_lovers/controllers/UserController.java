@@ -2,16 +2,22 @@ package com.example.plant_lovers.controllers;
 
 import com.example.plant_lovers.SesstionData.SessionData;
 import com.example.plant_lovers.data.*;
+import com.example.plant_lovers.dto.GardenDTO;
 import com.example.plant_lovers.dto.UserDTO;
 
 import com.example.plant_lovers.security.Password;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -47,8 +53,13 @@ public class UserController {
             return "login";
         }
 
+        var myPlants = dmg.getYourPlants(user.getId());
+
+
         request.getSession().setAttribute(SessionData.User, user);
         model.addAttribute("user", user);
+        model.addAttribute("myPlants", myPlants);
+
         return "your_garden";
     }
 
@@ -60,7 +71,7 @@ public class UserController {
         var users = dm.getUsers().stream().
                 filter(u -> u.getEmail().equalsIgnoreCase(dto.getUEmail())).findFirst();
 
-        if (!users.isPresent()) {
+        if (users.isEmpty()) {
 
             newUser.setPassword(Password.hashPassword(newUser.getPassword()));
 
@@ -75,51 +86,21 @@ public class UserController {
     }
 
 
-    @GetMapping("/your_garden")
-    public String getGarden(Model model, HttpSession session) {
+    @PostMapping("/your_garden")
+    public ModelAndView saveGarden(@PathVariable int id, @ModelAttribute("updateDto") GardenDTO dto, Model model) {
 
-        var plant = dmp.getPlants();
+
+        return new ModelAndView("redirect:/your_garden");
+    }
+
+
+    @GetMapping("/home")
+    public String getIndex(Model model, HttpSession session) {
 
         var user = (User) session.getAttribute(SessionData.User);
         model.addAttribute("user", user);
 
 
-        var myGarden = dmg.getGarden().stream().
-                filter(g-> (g.getUserId().equals(user.getId()))).findFirst();
-        var myPlants = myGarden.stream()
-                .map(p -> new Plant(
-                        p.getPlantId(),
-                        p.getImageId(),
-                        p.getScienceName(),
-                        p.getName(),
-                        p.getDescription(),
-                        p.getMoisture(),
-                        p.getSunlight(),
-                        p.getWatering(),
-                        p.getPetToxic(),
-                        p.getType(),
-                        p.getBloom(),
-                        p.getHumidity()))
-                        .collect(Collectors.toList());
-
-        model.addAttribute("myPlants", myPlants);
-
-        return "your_garden";
-    }
-//    @GetMapping("/your_garden")
-//    public String addGarden(Model model) {
-//        var dmg = new DataManagerGarden();
-//        var garden = dmg.getGarden();
-//        model.addAttribute("addedGarden", garden);
-//        var user = dm.getUsers();
-//        model.addAttribute("user", user);
-//        dmg.addGarden(garden);
-//        return "your_garden";
-//    }
-
-
-    @GetMapping("/home")
-    public String getIndex(Model model) {
         model.addAttribute("error", "");
         model.addAttribute("hasError", false);
         return "index";

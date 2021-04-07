@@ -9,14 +9,12 @@
 </head>
 <body>
 
-
 <nav class="navigation">
     <div class="links">
         <a class="link" href="/home/">Home</a>
         <a class="link" href="/all_plants">All Plants</a>
         <a class="link" href="/about">About</a>
         <a class="link" href="/login">Login</a>
-        <a class="link" href="/search">Search</a>
     </div>
 </nav>
 
@@ -27,7 +25,8 @@
 
     <form action="/search_plants" method="post" name="switchPlant" id="switchPlant">
         <select name="selectedPlant" id="selectedPlant">
-            <option th:each="plant: ${plants}" th:selected="${plant.getId() == selectedPlant}" th:value="${plant.getId()}" th:text="${plant.getName()}"></option>
+            <option th:each="plant: ${plants}" th:selected="${plant.getId() == selectedPlant}"
+                    th:value="${plant.getId()}" th:text="${plant.getName()}"></option>
         </select>
         <input type="submit" value="Search">
     </form>
@@ -36,41 +35,41 @@
     <section class="plants-container">
         <div class="plant">
             <div class="plant">
-                    <div th:each="plant: ${plants}">
-                        <div>
-                            <b><span th:text="${plant.getName()}"></span></b>
-                        </div>
-                        <div>
-                            <a th:text="${plant.getScienceName()}"> Plant Scientific Name</a>
-                        </div>
-                    <img th:src="${plant.image()}" width="300" height="300"/>
-                        <div>
-
-                            <a th:text="${plant.getDescription()}"> Plant Description</a>
-                        </div>
-                        <div>
-                            <a th:text="${plant.getMoisture()}"> Plant moisture</a>
-                        </div>
-                        <div>
-                            <a th:text="${plant.getSunlight()}"> Plant sunlight</a>
-                        </div>
-                        <div>
-                            <a th:text="${plant.getWatering()}"> Plant watering</a>
-                        </div>
-                        <div>
-                            <a th:text="${plant.getPetToxic()}"> Plant pet toxic</a>
-                        </div>
-                        <div>
-                            <a th:text="${plant.getType()}"> Plant type</a>
-                        </div>
-                        <div>
-                            <a th:text="${plant.getBloom()}"> Plant bloom</a>
-                        </div>
-                        <div>
-                            <a th:text="${plant.getHumidity()}"> Plant humidity</a>
-                        </div>
-
+                <div th:each="plant: ${plants}">
+                    <div>
+                        <b><span th:text="${plant.getName()}"></span></b>
                     </div>
+                    <div>
+                        <a th:text="${plant.getScienceName()}"> Plant Scientific Name</a>
+                    </div>
+                    <img th:src="${plant.image()}" width="300" height="300"/>
+                    <div>
+
+                        <a th:text="${plant.getDescription()}"> Plant Description</a>
+                    </div>
+                    <div>
+                        <a th:text="${plant.getMoisture()}"> Plant moisture</a>
+                    </div>
+                    <div>
+                        <a th:text="${plant.getSunlight()}"> Plant sunlight</a>
+                    </div>
+                    <div>
+                        <a th:text="${plant.getWatering()}"> Plant watering</a>
+                    </div>
+                    <div>
+                        <a th:text="${plant.getPetToxic()}"> Plant pet toxic</a>
+                    </div>
+                    <div>
+                        <a th:text="${plant.getType()}"> Plant type</a>
+                    </div>
+                    <div>
+                        <a th:text="${plant.getBloom()}"> Plant bloom</a>
+                    </div>
+                    <div>
+                        <a th:text="${plant.getHumidity()}"> Plant humidity</a>
+                    </div>
+
+                </div>
             </div>
         </div>
     </section>

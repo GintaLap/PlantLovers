@@ -11,13 +11,13 @@ body {
     line-height: 1.6;
     letter-spacing: 1.1px;
 
-/*background-color: #96bb7c;*/
-/*      background-image: url('static/img/startpage.JPG');*/
-/*      background-repeat: no-repeat;*/
-/*      background-attachment: fixed;*/
-/*      background-position: right top;*/
-/*      background-size: cover;*/
-/*      !* neņem ne krāsu, ne bildi *!*/
+    /*background-color: #96bb7c;*/
+    /*      background-image: url('static/img/startpage.JPG');*/
+    /*      background-repeat: no-repeat;*/
+    /*      background-attachment: fixed;*/
+    /*      background-position: right top;*/
+    /*      background-size: cover;*/
+    /*      !* neņem ne krāsu, ne bildi *!*/
 }
 
 
@@ -30,7 +30,7 @@ body {
     font-family: 'playfair_displayregular';
 }
 
-h1, h2{
+h1, h2 {
     font-family: 'playfair_displayregular';
 }
 
@@ -85,13 +85,49 @@ h1, h2{
     color: black;
 }
 
+/* Garden plants */
+.garden-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+
+.garden-container .heading {
+    font-size: 25px;
+    color: black;
+    text-transform: uppercase;
+}
+
+
+.gardenPlants {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: space-between;
+    gap: 50px 30px;
+    width: 100%;
+}
+
+.gardenPlants {
+    max-height: 700px;
+}
+
+.gardenPlants .image {
+    width: 250px;
+    height: 250px;
+    display: block;
+    object-fit: cover;
+}
+
 /* Plants */
 .plants-container {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
 }
 
 
@@ -120,7 +156,6 @@ h1, h2{
     display: block;
     object-fit: cover;
 }
-
 
 /* Style all input fields */
 input {

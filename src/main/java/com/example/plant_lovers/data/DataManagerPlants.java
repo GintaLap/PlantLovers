@@ -1,12 +1,9 @@
 package com.example.plant_lovers.data;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-import org.junit.Assert;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +54,6 @@ public class DataManagerPlants {
         }
         return null;
     }
-
-
 
     public Plant getPlantByName(String name) {
         var session = factory.openSession();

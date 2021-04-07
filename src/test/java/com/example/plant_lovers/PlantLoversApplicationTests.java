@@ -1,10 +1,14 @@
 package com.example.plant_lovers;
 
+import com.example.plant_lovers.controllers.UserController;
 import com.example.plant_lovers.data.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
+
+import java.util.stream.Collectors;
 
 @SpringBootTest
 class PlantLoversApplicationTests {
@@ -33,12 +37,14 @@ class PlantLoversApplicationTests {
     }
 
     @Test
-    public void check_garden_view(){
+    public void getGarden(){
         var dm = new DataManagerGarden();
         var garden = dm.getGarden();
         Assert.isTrue(garden.size() > 0);
-        System.out.print(garden);
-    }
+
+            System.out.print(garden);
+        }
+
 
     @Test
     public void plant_id(){
@@ -54,18 +60,26 @@ class PlantLoversApplicationTests {
         System.out.println(dm.getPlantByName("Zebra Plant").getScienceName());
     }
 
+    @Test
+    public void decoding(){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+      String orig = "ABC123abc";
+     String code = encoder.encode(orig);
+        System.out.println(code);
+       if(encoder.matches(orig, code)){
+           System.out.println("yes");
+       }else{
+           System.out.println("No");
+       }
+   }
+   @Test
+    public void check_Your_garden(){
+        var dmg = new DataManagerGarden();
+        int id = 1;
 
-//    @Test
-//    public void decoding(){
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//      String orig = "ABC123abc";
-//     String code = encoder.encode(orig);
-//        System.out.println(code);
-//       if(encoder.matches(orig, code)){
-//           System.out.println("yes");
-//       }else{
-//           System.out.println("No");
-//       }
-//   }
+       var myPlants = dmg.getYourPlants(id);
+       Assert.isTrue(myPlants.size() > 0);
+       System.out.println(myPlants);
+   }
 
 }

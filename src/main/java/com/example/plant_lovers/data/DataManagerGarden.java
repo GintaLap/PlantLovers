@@ -1,5 +1,6 @@
 package com.example.plant_lovers.data;
 
+import lombok.NonNull;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -7,6 +8,7 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class DataManagerGarden {
@@ -43,7 +45,7 @@ public class DataManagerGarden {
         }
     }
 
-    public List<YourGarden> getGarden() {
+    public List<Garden> getGarden() {
 
         var session = factory.openSession();
         try {
@@ -54,5 +56,64 @@ public class DataManagerGarden {
             session.close();
         }
         return new ArrayList<>();
+    }
+
+    public List<Plant> getYourPlants(int id){
+        var myGarden = getGarden().stream().
+                filter(g-> (g.getUserId().equals(id))).collect(Collectors.toList());
+
+        var myPlants = myGarden.stream()
+                .map(p -> new Plant(
+                        p.getPlant().getId(),
+                        p.getPlant().getImageId(),
+                        p.getPlant().getScienceName(),
+                        p.getPlant().getName(),
+                        p.getPlant().getDescription(),
+                        p.getPlant().getMoisture(),
+                        p.getPlant().getSunlight(),
+                        p.getPlant().getWatering(),
+                        p.getPlant().getPetToxic(),
+                        p.getPlant().getType(),
+                        p.getPlant().getBloom(),
+                        p.getPlant().getHumidity()))
+                .collect(Collectors.toList());
+
+        return myPlants;
+    }
+
+    public void save(@NonNull Object item) {
+        var session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+            session.update(item);
+            tx.commit();
+        } catch (HibernateException exception) {
+            if(tx != null) {
+                tx.rollback();
+            }
+            System.err.println(exception);
+        } finally {
+            session.close();
+        }
+    }
+
+    public void addCar(@NonNull Garden garden) {
+        var session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+            session.save(garden);
+            tx.commit();
+        } catch (HibernateException exception) {
+            if(tx != null) {
+                tx.rollback();
+            }
+            System.err.println(exception);
+        } finally {
+            session.close();
+        }
     }
 }
