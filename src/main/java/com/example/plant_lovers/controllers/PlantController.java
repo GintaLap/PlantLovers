@@ -1,8 +1,17 @@
 package com.example.plant_lovers.controllers;
 import com.example.plant_lovers.data.DataManagerPlants;
+import com.example.plant_lovers.data.Plant;
+import com.example.plant_lovers.dto.UserDTO;
+import com.example.plant_lovers.models.SwitchPlantModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -22,6 +31,30 @@ public class PlantController {
 
         return "all_plants";
     }
+
+    @PostMapping("/search_plants")
+    public String searchPlant( Model model) {
+     //   var plant = dm.getPlantbyId(id);
+    //    model.addAttribute("plants", dm.getPlants());
+        model.addAttribute("plants", dm.getPlants());
+
+
+            return "details";
+        }
+
+        //    @GetMapping("/city/{id}")
+    //    public String getCityDetails(@PathVariable int id, Model model) {
+    //
+    //        var dm = new DatabaseManager();
+    //        var city = dm.getCityById(id);
+    //
+    //        dm.getPopulationDataForCity(city);
+    //
+    //        model.addAttribute("city", city);
+    //
+    //        return "details";
+    //    }
+
 
     @GetMapping("/about")
     public String getAboutPage(Model model) {

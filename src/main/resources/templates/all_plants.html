@@ -8,12 +8,15 @@
     <link rel="icon" href="img/icon.png" type="image/jpg" sizes="16x16">
 </head>
 <body>
+
+
 <nav class="navigation">
     <div class="links">
         <a class="link" href="/home/">Home</a>
         <a class="link" href="/all_plants">All Plants</a>
         <a class="link" href="/about">About</a>
         <a class="link" href="/login">Login</a>
+        <a class="link" href="/search">Search</a>
     </div>
 </nav>
 
@@ -21,6 +24,14 @@
     <section class="intro">
         <h1 class="heading">All Plants</h1>
     </section>
+
+    <form action="/search_plants" method="post" name="switchPlant" id="switchPlant">
+        <select name="selectedPlant" id="selectedPlant">
+            <option th:each="plant: ${plants}" th:selected="${plant.getId() == selectedPlant}" th:value="${plant.getId()}" th:text="${plant.getName()}"></option>
+        </select>
+        <input type="submit" value="Search">
+    </form>
+
 
     <section class="plants-container">
         <div class="plant">

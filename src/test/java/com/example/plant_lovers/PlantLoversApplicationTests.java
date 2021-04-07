@@ -39,6 +39,22 @@ class PlantLoversApplicationTests {
         Assert.isTrue(garden.size() > 0);
         System.out.print(garden);
     }
+
+    @Test
+    public void plant_id(){
+        var dm = new DataManagerPlants();
+        org.junit.Assert.assertTrue(dm.getPlantById(3) != null);
+        System.out.println(dm.getPlantById(3).getName());
+    }
+
+    @Test
+    public void plant_name(){
+        var dm = new DataManagerPlants();
+        org.junit.Assert.assertTrue(dm.getPlantByName("Zebra Plant") != null);
+        System.out.println(dm.getPlantByName("Zebra Plant").getScienceName());
+    }
+
+
 //    @Test
 //    public void decoding(){
 //        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
