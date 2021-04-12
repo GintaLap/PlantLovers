@@ -50,9 +50,6 @@ public class UserController {
 
         var myPlants = dmg.getYourPlants(user.getId());
 
-        var g = new GardenDTO();
-        g.setUserId(user.getId());
-
 
         request.getSession().setAttribute(SessionData.User, user);
         model.addAttribute("user", user);
@@ -86,8 +83,8 @@ public class UserController {
 
 
     @GetMapping("/add_garden")
-    public String getSaveGarden (Model model, GardenDTO gDto) {
-
+    public String getSaveGarden (Model model, GardenDTO gDto, HttpSession session) {
+        var user = (User)session.getAttribute(SessionData.User);
         var dataModel = new AddGardenModel();
 
         var plant = dmp.getPlants();
@@ -101,8 +98,8 @@ public class UserController {
     }
 
     @PostMapping("/add_garden")
-    public ModelAndView saveGarden(@ModelAttribute("addGardenData") GardenDTO gDto, Model model ) {
-
+    public ModelAndView saveGarden(@ModelAttribute("addGardenData") GardenDTO gDto, Model model, HttpSession session ) {
+        var user = (User)session.getAttribute(SessionData.User);
           Plant plant = null;
 
         var res = dmp.getPlants().stream()
@@ -116,7 +113,7 @@ public class UserController {
             gDto.setUPlantId(plant.getId());
         }
 
-        var gardenToAdd = new Garden(0, gDto.getUserId(), Date.valueOf(LocalDate.now()),plant);
+        var gardenToAdd = new Garden(0, user.getId(), Date.valueOf(LocalDate.now()),plant);
 
          dmg.addGarden(gardenToAdd);
 
@@ -124,11 +121,11 @@ public class UserController {
         model.addAttribute("garden", gardenToAdd);
         model.addAttribute("GardenDTO", gDto);
 
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/your_garden");
     }
 
     @GetMapping("/calender")
-    public String getGoogleChart(@PathVariable int id, Model model) {
+    public String getGoogleChart(@PathVariable int id, Model model, HttpSession session) {
 
 //
 //        var city = dm.getCityById(id);
