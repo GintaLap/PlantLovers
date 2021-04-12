@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${plants}"></title>
+    <title th:text="${plant.getName()}"></title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -23,13 +23,46 @@
     </div>
 </nav>
 
-<h1>Here should be the searched plant details</h1>
+<h2 th:text="${'The chosen plant is ' + plant.getName() + '!'}"></h2>
 
-<ul>
-    <li th:each="plant: ${plants}">
-        <a th:href="${'/plant/' + plant.getId()}" th:text="${plant.getName()}"></a>
-    </li>
-</ul>
+
+<section class="plants-container">
+    <div class="gardenPlants">
+        <div class="garden-container">
+                <div>
+                    <a th:text="${plant.getScienceName()}"> Plant Scientific Name</a>
+                </div>
+                <img th:src="${plant.image()}" width="300" height="300"/>
+                <div>
+                    <a th:text="${plant.getDescription()}"> Plant Description</a>
+                </div>
+                <div>
+                    <a th:text="${plant.getMoisture()}"> Plant moisture</a>
+                </div>
+                <div>
+                    <a th:text="${plant.getSunlight()}"> Plant sunlight</a>
+                </div>
+                <div>
+                    <a th:text="${plant.getWatering()}"> Plant watering</a>
+                </div>
+                <div>
+                    <a th:text="${plant.getPetToxic()}"> Plant pet toxic</a>
+                </div>
+                <div>
+                    <a th:text="${plant.getType()}"> Plant type</a>
+                </div>
+                <div>
+                    <a th:text="${plant.getBloom()}"> Plant bloom</a>
+                </div>
+                <div>
+                    <a th:text="${plant.getHumidity()}"> Plant humidity</a>
+                </div>
+        </div>
+    </div>
+</section>
+
+ <a href="/all_plants" style="font-size: large; color: green">Search again</a>
+
 
 </body>
 </html>
