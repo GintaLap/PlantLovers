@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
-
 @Controller
 public class PlantController {
     private DataManagerPlants dm;
@@ -38,13 +37,12 @@ public class PlantController {
     }
 
     @PostMapping("/search_plants")
-    public String findPlants (@ModelAttribute ("selectedPlant")SwitchPlantModel switchPlantModel, Model model) {
-        var plant = dm.getPlantById( Integer.parseInt(switchPlantModel.getSelectedPlant()) );
+    public String findPlants(@ModelAttribute("selectedPlant") SwitchPlantModel switchPlantModel, Model model) {
+        var plant = dm.getPlantById(Integer.parseInt(switchPlantModel.getSelectedPlant()));
         model.addAttribute("plant", plant);
         model.addAttribute("selectedPlant", Integer.parseInt(switchPlantModel.getSelectedPlant()));
         return "details";
     }
-
 
 
     @GetMapping("/about")

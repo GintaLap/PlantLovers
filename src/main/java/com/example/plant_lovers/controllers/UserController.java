@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
@@ -81,16 +82,28 @@ public class UserController {
         return "login";
     }
 
+    @GetMapping("/your_garden")
+    public String getGarden(Model model, HttpSession session) {
+        var user = (User) session.getAttribute(SessionData.User);
+
+        var myPlants = dmg.getYourPlants(user.getId());
+
+
+        model.addAttribute("user", user);
+        model.addAttribute("myPlants", myPlants);
+
+        return "your_garden";
+    }
 
     @GetMapping("/add_garden")
-    public String getSaveGarden (Model model, GardenDTO gDto, HttpSession session) {
-        var user = (User)session.getAttribute(SessionData.User);
+    public String getSaveGarden(Model model, GardenDTO gDto, HttpSession session) {
+        var user = (User) session.getAttribute(SessionData.User);
         var dataModel = new AddGardenModel();
 
         var plant = dmp.getPlants();
         dataModel.setPlant(plant);
 
-        dataModel.setUserId(gDto.getUserId());
+        dataModel.setUserId(user.getId());
 
         model.addAttribute("viewModel", dataModel);
 
@@ -98,24 +111,24 @@ public class UserController {
     }
 
     @PostMapping("/add_garden")
-    public ModelAndView saveGarden(@ModelAttribute("addGardenData") GardenDTO gDto, Model model, HttpSession session ) {
-        var user = (User)session.getAttribute(SessionData.User);
-          Plant plant = null;
+    public ModelAndView saveGarden(@ModelAttribute("addGardenData") GardenDTO gDto, Model model, HttpSession session) {
+        var user = (User) session.getAttribute(SessionData.User);
+        Plant plant = null;
 
         var res = dmp.getPlants().stream()
                 .filter(p -> p.getId() == gDto.getUPlantId())
                 .findFirst();
 
-        if(res.isPresent()) {
+        if (res.isPresent()) {
             plant = res.get();
         }
         if (plant != null) {
             gDto.setUPlantId(plant.getId());
         }
 
-        var gardenToAdd = new Garden(0, user.getId(), Date.valueOf(LocalDate.now()),plant);
+        var gardenToAdd = new Garden(0, user.getId(), Date.valueOf(LocalDate.now()), plant);
 
-         dmg.addGarden(gardenToAdd);
+        dmg.addGarden(gardenToAdd);
 
         model.addAttribute("plant", plant);
         model.addAttribute("garden", gardenToAdd);
@@ -124,34 +137,53 @@ public class UserController {
         return new ModelAndView("redirect:/your_garden");
     }
 
-    @GetMapping("/calender")
-    public String getGoogleChart(@PathVariable int id, Model model, HttpSession session) {
+    @GetMapping("/delete_garden")
+    public String getDeletePlant(GardenDTO gDto, Model model, HttpSession session) {
+        var user = (User) session.getAttribute(SessionData.User);
 
-//
-//        var city = dm.getCityById(id);
-//
-//        dm.getPopulationDataForCity(city);
-//
-//        model.addAttribute("city", city);
-//
-//        var sb = new StringBuilder();
-//
-//        sb.append("var graphData = [\n");
-//        sb.append("['Year', 'Population'],\n");
-//
-//        for (var pop :
-//                city.getPopulation()) {
-//            sb.append("['"+ pop.getYear() +"',  "+pop.getPopulation()+"],\n");
-//        }
-//
-//        sb.append("];");
-//
-//        sb.append("var cityName='"+city.getName()+"';");
-//
-//        model.addAttribute("graph", sb.toString());
+        var myPlants = dmg.getYourPlants(user.getId());
 
-        return "calender";
+        var dataModelD = new AddGardenModel();
+        dataModelD.setPlant(myPlants);
+        dataModelD.setUserId(user.getId());
+
+
+        model.addAttribute("viewModelD", dataModelD);
+        model.addAttribute("user", user);
+
+        return "delete_garden";
     }
+
+    @PostMapping("/delete_garden")
+    public ModelAndView deleteGarden(@ModelAttribute("addGardenData") GardenDTO gDto, Model model, HttpSession session) {
+        var user = (User) session.getAttribute(SessionData.User);
+
+
+        var removeGarden = dmg.getGarden().stream()
+                .filter(g -> g.getUserId() == user.getId() && g.getPlant().getId() == gDto.getDPlantId())
+                .findFirst();
+        var rGardenId = removeGarden.get().getId();
+
+        dmg.deleteGarden(rGardenId);
+
+
+        model.addAttribute("user", user);
+        model.addAttribute("GardenDTO", gDto);
+
+        return new ModelAndView("redirect:/your_garden");
+    }
+
+    @GetMapping("/calendar")
+    public String getWateringCalendar(Model model, HttpSession session) {
+        var user = (User) session.getAttribute(SessionData.User);
+
+        var myPlants = dmg.getYourPlants(user.getId());
+
+
+        return "calendar";
+    }
+
+
     @GetMapping("/home")
     public String getIndex(Model model, HttpSession session) {
 

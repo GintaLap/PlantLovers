@@ -81,4 +81,25 @@ public class DataManagerGarden {
 
         return myPlants;
     }
+
+    public void deleteGarden(int id) {
+        var session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+            var garden = session.get(Garden.class, id);
+            if(garden != null) {
+                session.delete(garden);
+            }
+            tx.commit();
+        } catch (HibernateException exception) {
+            if(tx != null) {
+                tx.rollback();
+            }
+            System.err.println(exception);
+        } finally {
+            session.close();
+        }
+    }
 }

@@ -8,20 +8,23 @@
 </head>
 <body>
 <div th:replace="navigation :: navigation"></div>
-
-
 <main class="content">
     <section class="intro">
         <section class="garden-container">
             <h1 class="heading">Your garden</h1>
 
-            <h1>Add plants to your lovely garden...</h1>
-            <a th:href="@{add_garden}" >
-                <button>Add plants</button>
-            </a>
+            <h1>Modify your lovely garden...</h1>
+            <div class="gardenButtons">
+                <a th:href="@{add_garden}">
+                    <button>Add plants</button>
+                </a>
+                <a th:href="@{delete_garden}">
+                    <button>Delete plants</button>
+                </a>
+            </div>
             <h1>See plant watering schedule...</h1>
-            <a th:href="@{calender.html}" >
-                <button>See Calender</button>
+            <a th:href="@{calendar}">
+                <button>View Calendar</button>
             </a>
             <h2>Check out your garden:</h2>
             <section class="garden-container">

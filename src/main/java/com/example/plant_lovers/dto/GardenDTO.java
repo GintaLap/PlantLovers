@@ -11,6 +11,7 @@ public class GardenDTO {
     private Integer id;
     private Integer UserId;
     private Integer uPlantId;
+    private Integer dPlantId;
 
 
 }
