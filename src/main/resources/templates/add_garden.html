@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Garden</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <link rel="icon" href="img/icon.png" type="image/jpg" sizes="16x16">
+</head>
+<body>
+<div th:replace="navigation :: navigation"></div>
+
+<main class="content">
+    <h1 class="heading">Your garden</h1>
+
+    <h1>Add plants to your lovely garden...</h1>
+    <form name="addGardenData" id="addGardenData" method="post" action="/add_garden">
+        <div>
+            <label>Plant:</label>
+            <select name="uPlantId" id="uPlantId">
+                <option th:each="plant: ${viewModel.getPlant()}" th:value="${plant.getId()}"
+                        th:text="${plant.getName()}">
+                </option>
+            </select>
+        </div>
+        <input type="submit" value="Add to your garden">
+</main>
+<footer th:replace="footer :: footer">...</footer>
+</body>
+</html>

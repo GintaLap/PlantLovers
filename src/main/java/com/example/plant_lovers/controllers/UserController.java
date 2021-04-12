@@ -4,23 +4,21 @@ import com.example.plant_lovers.SesstionData.SessionData;
 import com.example.plant_lovers.data.*;
 import com.example.plant_lovers.dto.GardenDTO;
 import com.example.plant_lovers.dto.UserDTO;
-
+import com.example.plant_lovers.models.AddGardenModel;
 import com.example.plant_lovers.security.Password;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.sql.Date;
+import java.time.LocalDate;
+
 
 @Controller
+@RequestMapping("/")
 public class UserController {
     private DataManagerUser dm;
     private DataManagerGarden dmg;
@@ -32,7 +30,6 @@ public class UserController {
         dmp = new DataManagerPlants();
     }
 
-
     @GetMapping("/login")
     public String getLogin(Model model) {
         model.addAttribute("error", "");
@@ -40,12 +37,10 @@ public class UserController {
         return "login";
     }
 
-
     @PostMapping("/login")
-    public String login(UserDTO udto, Model model, HttpServletRequest request) {
+    public String profile(UserDTO udto, Model model, HttpServletRequest request) {
 
         var user = dm.login(udto.getUEmail());
-
         if (!Password.checkPassword(udto.getUPassword(), user.getPassword()) || user == null) {
 
             model.addAttribute("error", "Unable to login");
@@ -55,10 +50,14 @@ public class UserController {
 
         var myPlants = dmg.getYourPlants(user.getId());
 
+        var g = new GardenDTO();
+        g.setUserId(user.getId());
+
 
         request.getSession().setAttribute(SessionData.User, user);
         model.addAttribute("user", user);
         model.addAttribute("myPlants", myPlants);
+
 
         return "your_garden";
     }
@@ -86,14 +85,76 @@ public class UserController {
     }
 
 
-    @PostMapping("/your_garden")
-    public ModelAndView saveGarden(@PathVariable int id, @ModelAttribute("updateDto") GardenDTO dto, Model model) {
+    @GetMapping("/add_garden")
+    public String getSaveGarden (Model model, GardenDTO gDto) {
 
+        var dataModel = new AddGardenModel();
 
-        return new ModelAndView("redirect:/your_garden");
+        var plant = dmp.getPlants();
+        dataModel.setPlant(plant);
+
+        dataModel.setUserId(gDto.getUserId());
+
+        model.addAttribute("viewModel", dataModel);
+
+        return "add_garden";
     }
 
+    @PostMapping("/add_garden")
+    public ModelAndView saveGarden(@ModelAttribute("addGardenData") GardenDTO gDto, Model model ) {
 
+          Plant plant = null;
+
+        var res = dmp.getPlants().stream()
+                .filter(p -> p.getId() == gDto.getUPlantId())
+                .findFirst();
+
+        if(res.isPresent()) {
+            plant = res.get();
+        }
+        if (plant != null) {
+            gDto.setUPlantId(plant.getId());
+        }
+
+        var gardenToAdd = new Garden(0, gDto.getUserId(), Date.valueOf(LocalDate.now()),plant);
+
+         dmg.addGarden(gardenToAdd);
+
+        model.addAttribute("plant", plant);
+        model.addAttribute("garden", gardenToAdd);
+        model.addAttribute("GardenDTO", gDto);
+
+        return new ModelAndView("redirect:/");
+    }
+
+    @GetMapping("/calender")
+    public String getGoogleChart(@PathVariable int id, Model model) {
+
+//
+//        var city = dm.getCityById(id);
+//
+//        dm.getPopulationDataForCity(city);
+//
+//        model.addAttribute("city", city);
+//
+//        var sb = new StringBuilder();
+//
+//        sb.append("var graphData = [\n");
+//        sb.append("['Year', 'Population'],\n");
+//
+//        for (var pop :
+//                city.getPopulation()) {
+//            sb.append("['"+ pop.getYear() +"',  "+pop.getPopulation()+"],\n");
+//        }
+//
+//        sb.append("];");
+//
+//        sb.append("var cityName='"+city.getName()+"';");
+//
+//        model.addAttribute("graph", sb.toString());
+
+        return "calender";
+    }
     @GetMapping("/home")
     public String getIndex(Model model, HttpSession session) {
 

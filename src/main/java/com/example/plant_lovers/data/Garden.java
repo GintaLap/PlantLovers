@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
+
 
 @Data
 @AllArgsConstructor
@@ -20,8 +22,12 @@ public class Garden {
     @Column(name = "garden_user_id")
     private Integer userId;
 
+    @Column(name = "garden_plant_watering_date")
+    private Date waterDate;
+
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "garden_plant_id",referencedColumnName = "plant_id")
     private Plant plant;
+
 
 }

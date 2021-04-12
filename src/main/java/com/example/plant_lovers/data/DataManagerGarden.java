@@ -1,5 +1,6 @@
 package com.example.plant_lovers.data;
 
+import com.example.plant_lovers.dto.GardenDTO;
 import lombok.NonNull;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
@@ -28,7 +29,7 @@ public class DataManagerGarden {
         }
     }
 
-    public void addGarden(Object item) {
+    public void addGarden(@NonNull Object item) {
         var session = factory.openSession();
         Transaction tx = null;
         try {
@@ -79,41 +80,5 @@ public class DataManagerGarden {
                 .collect(Collectors.toList());
 
         return myPlants;
-    }
-
-    public void save(@NonNull Object item) {
-        var session = factory.openSession();
-        Transaction tx = null;
-
-        try {
-            tx = session.beginTransaction();
-            session.update(item);
-            tx.commit();
-        } catch (HibernateException exception) {
-            if(tx != null) {
-                tx.rollback();
-            }
-            System.err.println(exception);
-        } finally {
-            session.close();
-        }
-    }
-
-    public void addCar(@NonNull Garden garden) {
-        var session = factory.openSession();
-        Transaction tx = null;
-
-        try {
-            tx = session.beginTransaction();
-            session.save(garden);
-            tx.commit();
-        } catch (HibernateException exception) {
-            if(tx != null) {
-                tx.rollback();
-            }
-            System.err.println(exception);
-        } finally {
-            session.close();
-        }
     }
 }

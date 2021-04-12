@@ -3,19 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>About</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-    <link rel="stylesheet" href="./css/styles.css">
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
     <link rel="icon" href="img/icon.png" type="image/jpg" sizes="16x16">
 </head>
 <body>
-<nav class="navigation">
-    <div class="links">
-        <a class="link" href="/home/">Home</a>
-        <a class="link" href="/all_plants">All Plants</a>
-        <a class="link" href="/about">About</a>
-        <a class="link" href="/login">Login</a>
-    </div>
-</nav>
+<div th:replace="navigation :: navigation"></div>
+
 <main class="content">
     <section class="intro">
         <h1 class="heading">About</h1>
@@ -24,5 +17,8 @@
     This project will be for people, that usually murders their houseplants.
 </p>
 </main>
+
+<footer th:replace="footer :: footer"> </footer>
+
 </body>
 </html>

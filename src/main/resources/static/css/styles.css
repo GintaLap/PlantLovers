@@ -1,31 +1,46 @@
 /* GENERAL STYLES */
 @font-face {
-    font-family: 'playfair_displayregular';
-    src: url('playfairdisplay-variablefont_wght-webfont.woff2') format('woff2'),
-    url('playfairdisplay-variablefont_wght-webfont.woff') format('woff');
-    font-weight: normal;
+    font-family: 'Tangerine';
     font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/tangerine/v12/IurY6Y5j_oScZZow4VOxCZZM.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+.homepage {
+
+    background-image: url("static/img/bakcground.jpg");
+    background-size: cover;
+    font-family: sans-serif;
+    margin-top: 80px;
+    padding: 30px;
 }
 
 body {
     line-height: 1.6;
     letter-spacing: 1.1px;
-
-    /*background-color: #96bb7c;*/
-    /*      background-image: url('static/img/startpage.JPG');*/
-    /*      background-repeat: no-repeat;*/
-    /*      background-attachment: fixed;*/
-    /*      background-position: right top;*/
-    /*      background-size: cover;*/
-    /*      !* neņem ne krāsu, ne bildi *!*/
+    margin: 0;
+    height: 100%;
+    flex: 1 0 auto;
+    /*background-image: url('static/img/bakcground.jpg');*/
+    /*background-repeat: no-repeat;*/
+    /*background-attachment: fixed;*/
+    /*background-position: right top;*/
+    /*background-size: cover;*/
+    /* neņem ne krāsu, ne bildi */
 }
 
-
 /* HEADER */
+header img {
+    height: 80px;
+}
+
 .navigation {
     display: flex;
+    background: #E3E6DA;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    margin: 20px;
     padding: 20px;
     font-family: 'playfair_displayregular';
 }
@@ -45,9 +60,9 @@ h1, h2 {
     text-decoration: none;
     text-transform: uppercase;
     color: seagreen;
-    margin-right: 15px;
+    margin-right: 20px;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .navigation .link:hover {
@@ -59,7 +74,6 @@ h1, h2 {
 }
 
 /* HEADER */
-
 
 .content {
     display: flex;
@@ -123,11 +137,13 @@ h1, h2 {
 
 /* Plants */
 .plants-container {
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     flex-wrap: wrap;
+    padding: 20px;
+    margin: auto;
 }
 
 
@@ -144,6 +160,8 @@ h1, h2 {
     justify-content: space-between;
     gap: 50px 30px;
     width: 100%;
+    padding: 20px;
+    margin: auto;
 }
 
 .plant {
@@ -217,4 +235,16 @@ input[type=submit] {
     content: "&#10006;";
 }
 
-/* RECIPES */
+.footer {
+    flex-shrink: 0;
+    padding: 3px;
+    background-color: #E3E6DA;
+    color: seagreen;
+
+}
+.created{
+    text-align: right;
+}
+.year{
+    text-align: left;
+}

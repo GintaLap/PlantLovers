@@ -3,67 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <title>Your Garden</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-    <link rel="stylesheet" href="./css/styles.css">
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
     <link rel="icon" href="img/icon.png" type="image/jpg" sizes="16x16">
 </head>
 <body>
-<nav class="navigation">
-    <div class="links">
-        <a class="link" href="/home/">Home</a>
-        <a class="link" href="/all_plants">All Plants</a>
-        <a class="link" href="/about">About</a>
-    </div>
-</nav>
+<div th:replace="navigation :: navigation"></div>
+
 
 <main class="content">
     <section class="intro">
-    <section class="garden-container">
-        <h1 class="heading">Your garden</h1>
-        <h1 th:text="${'Welcome to your garden ' + user.getName() + '!'}"></h1>
-        <h2>Check out your garden:</h2>
-    </section>
-
         <section class="garden-container">
-        <div class="gardenPlants">
-            <div class="garden_plants">
-                <div th:each="gardenPlants: ${myPlants}">
-                    <div>
-                        <b><span th:text="${gardenPlants.getName()}"></span></b>
-                    </div>
-                    <div>
-                        <a th:text="${gardenPlants.getScienceName()}"> Plant Scientific Name</a>
-                    </div>
-                    <img th:src="${gardenPlants.image()}" width="300" height="300"/>
-                    <div>
-                        <a th:text="${gardenPlants.getDescription()}"> Plant Description</a>
-                    </div>
-                    <div>
-                        <a th:text="${gardenPlants.getMoisture()}"> Plant moisture</a>
-                    </div>
-                    <div>
-                        <a th:text="${gardenPlants.getSunlight()}"> Plant sunlight</a>
-                    </div>
-                    <div>
-                        <a th:text="${gardenPlants.getWatering()}"> Plant watering</a>
-                    </div>
-                    <div>
-                        <a th:text="${gardenPlants.getPetToxic()}"> Plant pet toxic</a>
-                    </div>
-                    <div>
-                        <a th:text="${gardenPlants.getType()}"> Plant type</a>
-                    </div>
-                    <div>
-                        <a th:text="${gardenPlants.getBloom()}"> Plant bloom</a>
-                    </div>
-                    <div>
-                        <a th:text="${gardenPlants.getHumidity()}"> Plant humidity</a>
+            <h1 class="heading">Your garden</h1>
+
+            <h1>Add plants to your lovely garden...</h1>
+            <a th:href="@{add_garden}" >
+                <button>Add plants</button>
+            </a>
+            <h1>See plant watering schedule...</h1>
+            <a th:href="@{calender.html}" >
+                <button>See Calender</button>
+            </a>
+            <h2>Check out your garden:</h2>
+            <section class="garden-container">
+                <div class="gardenPlants">
+                    <div th:each="gardenPlants: ${myPlants}">
+                        <div>
+                            <b><span th:text="${gardenPlants.getName()}"></span></b>
+                        </div>
+                        <div>
+                            <a th:text="${gardenPlants.getScienceName()}"> Plant Scientific Name</a>
+                        </div>
+                        <img th:src="${gardenPlants.image()}" width="300" height="300"/>
+                        <div>
+                            <a th:text="${gardenPlants.getDescription()}"> Plant Description</a>
+                        </div>
+                        <div>
+                            <a th:text="${'Moisture level: ' + gardenPlants.getMoisture()}"> Plant moisture</a>
+                        </div>
+                        <div>
+                            <a th:text="${'Sunlight level: ' + gardenPlants.getSunlight()}"> Plant sunlight</a>
+                        </div>
+                        <div>
+                            <a th:text="${'Water once in: ' + gardenPlants.getWatering() + ' days'}"> Plant watering</a>
+                        </div>
+                        <div>
+                            <a th:text="${'Toxic to pets: ' + gardenPlants.getPetToxic()}"> Plant pet toxic</a>
+                        </div>
+                        <div>
+                            <a th:text="${'Plant type: ' + gardenPlants.getType()}"> Plant type</a>
+                        </div>
+                        <div>
+                            <a th:text="${'Blooming time: ' + gardenPlants.getBloom()}"> Plant bloom</a>
+                        </div>
+                        <div>
+                            <a th:text="${'Humidity needed: ' + gardenPlants.getHumidity()}"> Plant humidity</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
+        </section>
     </section>
 </main>
+<footer th:replace="footer :: footer">...</footer>
 </body>
 </html>

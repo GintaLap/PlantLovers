@@ -3,20 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Plant Lovers</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-    <link rel="stylesheet" href="./css/styles.css">
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
     <link rel="icon" href="img/icon.png" type="image/jpg" sizes="16x16">
 </head>
-<body>
+<body class="homepage">
 
-<nav class="navigation" style="font-family: 'playfair_displayregular'">
-    <div class="links">
-        <a class="link" href="/home/">Home</a>
-        <a class="link" href="/all_plants">All Plants</a>
-        <a class="link" href="/about">About</a>
-        <a class="link" href="/login">Login</a>
-    </div>
-</nav>
+<div th:replace="navigation :: navigation"></div>
 
+<!--    <img th:src="@{/img/bakcground.jpg}" class="homepage" >-->
+<footer th:replace="footer :: footer">...</footer>
 </body>
 </html>
