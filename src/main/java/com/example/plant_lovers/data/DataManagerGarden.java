@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -80,6 +81,17 @@ public class DataManagerGarden {
                 .collect(Collectors.toList());
 
         return myPlants;
+    }
+    public List<Date> getFirstDate(int id){
+        var myGarden = getGarden().stream().
+                filter(g-> (g.getUserId().equals(id)))
+                .collect(Collectors.toList());
+
+        var wateringDate = myGarden.stream()
+                .map(d-> new Date(String.valueOf(d.getWaterDate())))
+                .collect(Collectors.toList());
+
+        return wateringDate;
     }
 
     public void deleteGarden(int id) {

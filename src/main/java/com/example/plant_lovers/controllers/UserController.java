@@ -51,11 +51,9 @@ public class UserController {
 
         var myPlants = dmg.getYourPlants(user.getId());
 
-
         request.getSession().setAttribute(SessionData.User, user);
         model.addAttribute("user", user);
         model.addAttribute("myPlants", myPlants);
-
 
         return "your_garden";
     }
@@ -69,9 +67,7 @@ public class UserController {
                 filter(u -> u.getEmail().equalsIgnoreCase(dto.getUEmail())).findFirst();
 
         if (users.isEmpty()) {
-
             newUser.setPassword(Password.hashPassword(newUser.getPassword()));
-
             dm.addUser(newUser);
 
             return "register_success";
@@ -88,7 +84,6 @@ public class UserController {
 
         var myPlants = dmg.getYourPlants(user.getId());
 
-
         model.addAttribute("user", user);
         model.addAttribute("myPlants", myPlants);
 
@@ -98,11 +93,11 @@ public class UserController {
     @GetMapping("/add_garden")
     public String getSaveGarden(Model model, GardenDTO gDto, HttpSession session) {
         var user = (User) session.getAttribute(SessionData.User);
-        var dataModel = new AddGardenModel();
+
+       var dataModel = new AddGardenModel();
 
         var plant = dmp.getPlants();
         dataModel.setPlant(plant);
-
         dataModel.setUserId(user.getId());
 
         model.addAttribute("viewModel", dataModel);
@@ -113,6 +108,7 @@ public class UserController {
     @PostMapping("/add_garden")
     public ModelAndView saveGarden(@ModelAttribute("addGardenData") GardenDTO gDto, Model model, HttpSession session) {
         var user = (User) session.getAttribute(SessionData.User);
+
         Plant plant = null;
 
         var res = dmp.getPlants().stream()
@@ -127,7 +123,6 @@ public class UserController {
         }
 
         var gardenToAdd = new Garden(0, user.getId(), Date.valueOf(LocalDate.now()), plant);
-
         dmg.addGarden(gardenToAdd);
 
         model.addAttribute("plant", plant);
@@ -163,7 +158,6 @@ public class UserController {
                 .filter(g -> g.getUserId() == user.getId() && g.getPlant().getId() == gDto.getDPlantId())
                 .findFirst();
         var rGardenId = removeGarden.get().getId();
-
         dmg.deleteGarden(rGardenId);
 
 
@@ -178,11 +172,11 @@ public class UserController {
         var user = (User) session.getAttribute(SessionData.User);
 
         var myPlants = dmg.getYourPlants(user.getId());
+        var wateringDate = dmg.getFirstDate(user.getId());
 
 
         return "calendar";
     }
-
 
     @GetMapping("/home")
     public String getIndex(Model model, HttpSession session) {
