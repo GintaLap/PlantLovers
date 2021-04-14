@@ -1,0 +1,28 @@
+#spring:
+#  mail:
+#  Host: smtp.gmail.com #SMTPServer Address
+#  Username: plantlovers.plantlovers@gmail.com
+#  Password: PLANT-lovers
+#    properties:
+#  From: plantlovers.plantlovers@gmail.com #mail sender (ie real mailbox)
+##  thymeleaf:
+#    cache: false
+#    prefix: classpath:/views/  servlet:
+#    multipart:
+#  Max-file-size: 10MB #limit single file size
+#  Max-request-size: 50MB #limit request total
+
+
+  spring.mail.host=smtp.gmail.com
+  spring.mail.port=587
+  spring.mail.username=plantlovers.plantllovers@gmail.com
+  spring.mail.password=PLANT-lovers
+
+  # Other properties
+  spring.mail.properties.mail.smtp.auth=true
+  spring.mail.properties.mail.smtp.connectiontimeout=5000
+  spring.mail.properties.mail.smtp.timeout=5000
+  spring.mail.properties.mail.smtp.writetimeout=5000
+
+  # TLS , port 587
+  spring.mail.properties.mail.smtp.starttls.enable=true
