@@ -5,7 +5,14 @@ import com.example.plant_lovers.data.*;
 import com.example.plant_lovers.dto.GardenDTO;
 import com.example.plant_lovers.dto.UserDTO;
 import com.example.plant_lovers.models.AddGardenModel;
+
+import com.example.plant_lovers.models.WateringModel;
 import com.example.plant_lovers.security.Password;
+
+import com.google.gson.Gson;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +20,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.sql.Date;
-import java.time.LocalDate;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -78,6 +93,19 @@ public class UserController {
         return "login";
     }
 
+
+    @GetMapping("/home")
+    public String getIndex(Model model, HttpSession session) {
+
+        var user = (User) session.getAttribute(SessionData.User);
+        model.addAttribute("user", user);
+
+
+        model.addAttribute("error", "");
+        model.addAttribute("hasError", false);
+        return "index";
+    }
+
     @GetMapping("/your_garden")
     public String getGarden(Model model, HttpSession session) {
         var user = (User) session.getAttribute(SessionData.User);
@@ -94,7 +122,7 @@ public class UserController {
     public String getSaveGarden(Model model, GardenDTO gDto, HttpSession session) {
         var user = (User) session.getAttribute(SessionData.User);
 
-       var dataModel = new AddGardenModel();
+        var dataModel = new AddGardenModel();
 
         var plant = dmp.getPlants();
         dataModel.setPlant(plant);
@@ -122,7 +150,7 @@ public class UserController {
             gDto.setUPlantId(plant.getId());
         }
 
-        var gardenToAdd = new Garden(0, user.getId(), Date.valueOf(LocalDate.now()), plant);
+        var gardenToAdd = new Garden(0, user.getId(), LocalDateTime.now(), plant);
         dmg.addGarden(gardenToAdd);
 
         model.addAttribute("plant", plant);
@@ -167,28 +195,64 @@ public class UserController {
         return new ModelAndView("redirect:/your_garden");
     }
 
-    @GetMapping("/calendar")
-    public String getWateringCalendar(Model model, HttpSession session) {
-        var user = (User) session.getAttribute(SessionData.User);
-
-        var myPlants = dmg.getYourPlants(user.getId());
-        var wateringDate = dmg.getFirstDate(user.getId());
 
 
-        return "calendar";
+    @RequestMapping(value = "/calendar", method= RequestMethod.GET)
+    public ModelAndView getCalendar() {
+
+        ModelAndView modelAndView = new ModelAndView("calendar");
+
+        return modelAndView;
     }
 
-    @GetMapping("/home")
-    public String getIndex(Model model, HttpSession session) {
-
+    @RequestMapping(value = "/calendar/dates", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    String plantCalendar(HttpSession session, HttpServletResponse response) {
         var user = (User) session.getAttribute(SessionData.User);
-        model.addAttribute("user", user);
+
+        var dmg = new DataManagerGarden();
+        var myGarden = dmg.getGarden().stream().
+                filter(g -> (g.getUserId().equals(user.getId())))
+                .collect(Collectors.toList());
 
 
-        model.addAttribute("error", "");
-        model.addAttribute("hasError", false);
-        return "index";
-    }
+        var wateringDate = myGarden.stream()
+                .map(p -> new WateringModel(p.getPlant().getName(), p.getWaterDate())).collect(Collectors.toList());
+
+        var plantN = myGarden.stream().map(p -> (p.getPlant().getName())).collect(Collectors.toList());
+
+        var startDate = myGarden.stream().map(Garden::getWaterDate).collect(Collectors.toList());
+
+
+        Map<String, String> map = new HashMap<String, String>();
+
+
+        for (var plant:plantN) {
+            map.put("title", plant);
+        }
+        for (var date: startDate) {
+            map.put("start", String.valueOf(date));
+        }
+
+//        for (int i = 0; i < plantN.size(); i++) {
+//            map.put("title", plantN);
+//        }
+//        for (int i = 0; i < startDate.size(); i++) {
+//            map.put("start", startDate);
+//        }
+
+
+        // Convert to JSON string.
+        String json = new Gson().toJson(map);
+
+        // Write JSON string.
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+      return json;
+  }
+
 }
 
 

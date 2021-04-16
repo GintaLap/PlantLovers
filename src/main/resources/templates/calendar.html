@@ -5,24 +5,70 @@
     <title>Calendar</title>
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
     <link rel="icon" href="img/icon.png" type="image/jpg" sizes="16x16">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <link href='fullcalendar/main.css' rel='stylesheet' />
+    <script src='fullcalendar/main.js'></script>
     <script>
         $(document).ready(function() {
-            var calendar = $('#calendar').fullCalendar({
-                editable: true,
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
+            var date = new Date();
+            var d = date.getDate();
+            var m = date.getMonth();
+            var y = date.getFullYear();
+            $.getJSON([@spring.url '/calendar/dates'], function (data) {
+                var calendar = $('#calendar').fullCalendar({
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+                    },
+                    selectable: true,
+                    selectHelper: true,
+                    select: function(start, end, allDay) {
+                        var title = prompt('Event Title:');
+                        if (title) {
+                            calendar.fullCalendar('renderEvent',
+                                {
+                                    title: title,
+                                    start: start,
+                                    end: end,
+                                    allDay: allDay
+                                },
+                                true // make the event "stick"
+                            );
+                        }
+                        calendar.fullCalendar('unselect');
+                    },
+                    editable: true,
+                    events:[data]
+                });
             });
         });
-
+        <div id="calendar"> </div>
+        //
+        // $(document).ready(function () {
+        //     var calendar = $('#calendar').fullCalendar({
+        //         header: {
+        //             left: 'prev,next today',
+        //             center: 'title',
+        //         },
+        //         defaultDate: moment().format("YYYY-MM-DD"),
+        //         editable: false,
+        //         events: {
+        //
+        //             url: '/calendar/dates',
+        //             type: 'GET',
+        //             error: function () {
+        //                 alert('there was an error while fetching events!');
+        //             },
+        //         }
+        //     });
+        //
+        // });
     </script>
     <style>
 

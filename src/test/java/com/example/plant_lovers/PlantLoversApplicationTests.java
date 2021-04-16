@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
 
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @SpringBootTest
@@ -82,4 +83,21 @@ class PlantLoversApplicationTests {
        System.out.println(myPlants);
    }
 
+    @Test
+    public void check_watering_dates(){
+        var dmg = new DataManagerGarden();
+        int id = 17;
+
+        var myPlants = dmg.getDateAndPlant(id);
+        Assert.isTrue(myPlants.size() > 0);
+        System.out.println(myPlants);
+    }
+    @Test
+    public void save_dates_to_json(){
+        var dmg = new DataManagerGarden();
+        int id = 17;
+        var myPlants = dmg.getDateAndPlant(id);
+        dmg.saveToJason(myPlants);
+
+    }
 }
