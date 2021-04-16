@@ -12,16 +12,22 @@ import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.junit.Test;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -179,6 +185,30 @@ public class DataManagerGarden {
     }
 
 
+    public void gettingWateringDate(int id) {
+        var dmp = new DataManagerPlants();
+        var myGarden = getGarden().stream().
+                filter(g -> (g.getUserId().equals(id)))
+                .collect(Collectors.toList());
+
+        var startDate = myGarden.stream().map(Garden::getWaterDate).collect(Collectors.toList());
+
+        var wateringInDataBase = myGarden.stream().
+                map(w -> (w.getPlant().getWatering())
+                ).collect(Collectors.toList());
+
+        for (int i = 0; i < startDate.size(); i++) {
+            var wateringPlan = startDate.get(i).plusDays(wateringInDataBase.get(i));
+           System.out.println(wateringPlan + " ");
+        }
+    }
+
+    @Test
+    public void getting_watering_date() {
+        gettingWateringDate((83));
+    }
+
+
 //    public void doGet(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
 //
 //
@@ -197,4 +227,4 @@ public class DataManagerGarden {
 //        PrintWriter out = response.getWriter();
 //        out.write(new Gson().toJson(wateringDate));
 //    }
-}
+    }
