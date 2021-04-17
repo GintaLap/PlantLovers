@@ -33,7 +33,7 @@
                         <a th:text="${plant.getScienceName()}"> Plant Scientific Name</a>
                     </div>
                     <img th:src="${plant.image()}" width="300" height="300"/>
-                    <div>
+                    <div style="text-align: justify; padding-right: 35px">
                         <a th:text="${plant.getDescription()}"> Plant Description</a>
                     </div>
                     <div>
@@ -60,7 +60,17 @@
             </div>
         </div>
     </section>
+
+
 </main>
-<footer th:replace="footer :: footer">...</footer>
+
+<div style="margin-bottom: 20px;">
+    <a href="/all_plants" style="font-size: large; color: green; margin-left: 58px"><b>Go Up!</b></a>
+    <br>
+    <br>
+    <footer th:replace="footer :: footer">...</footer>
+
+</div>
+
 </body>
 </html>

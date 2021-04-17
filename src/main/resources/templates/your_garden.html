@@ -23,6 +23,16 @@
                 </a>
             </div>
             <h1>See plant watering schedule...</h1>
+
+<!--            <div th:each="gardenPlants: ${myPlants}">-->
+<!--                <b><span th:text="${gardenPlants.getName()}"></span></b>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <b><span th:text="${waterDay}"></span></b>-->
+<!--            </div>-->
+
+
+
             <a th:href="@{calendar}">
                 <button>View Calendar</button>
             </a>
@@ -37,7 +47,7 @@
                             <a th:text="${gardenPlants.getScienceName()}"> Plant Scientific Name</a>
                         </div>
                         <img th:src="${gardenPlants.image()}" width="300" height="300"/>
-                        <div>
+                        <div style="text-align: justify; padding-right: 35px">
                             <a th:text="${gardenPlants.getDescription()}"> Plant Description</a>
                         </div>
                         <div>
@@ -67,6 +77,9 @@
         </section>
     </section>
 </main>
+<div style="margin-bottom: 20px">
+    <br>
 <footer th:replace="footer :: footer">...</footer>
+</div>
 </body>
 </html>

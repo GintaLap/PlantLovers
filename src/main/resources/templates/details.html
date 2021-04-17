@@ -13,11 +13,11 @@
 <body>
 <div th:replace="navigation :: navigation"></div>
 
-<h2 th:text="${'The chosen one is ' + plant.getName() + '!'}"></h2>
+<h2 class="login_h2" th:text="${'The chosen one is ' + plant.getName() + '!'}"></h2>
 
 
 <section class="plants-container">
-    <div class="plant">
+    <div class="plant" style="margin: -50px 0px 0px 50px">
         <div class="plants-container">
             <div>
                 <b><span th:text="${plant.getName()}"></span></b>
@@ -26,7 +26,7 @@
                     <a th:text="${plant.getScienceName()}"> Plant Scientific Name</a>
                 </div>
                 <img th:src="${plant.image()}" width="300" height="300"/>
-                <div>
+                <div style="text-align: justify; padding-right: 35px">
                     <a th:text="${plant.getDescription()}"> Plant Description</a>
                 </div>
                 <div>
@@ -54,8 +54,19 @@
     </div>
 </section>
 
- <a href="/all_plants" style="font-size: large; color: green">Search again</a>
+<section class="plants-container">
+    <div class="plant"></div>
+        <div class="plants-container"></div>
+</section>
 
+<div style="margin-bottom: 20px">
+    <br>
+    <a href="/all_plants" style="font-size: large; color: green; margin-left: 58px"><b>Search again</b></a>
+    <br>
+    <br>
+    <footer th:replace="footer :: footer">...</footer>
+
+</div>
 
 </body>
 </html>
