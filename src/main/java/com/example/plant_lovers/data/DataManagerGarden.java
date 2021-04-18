@@ -116,7 +116,6 @@ public class DataManagerGarden {
 
 
     public List<LocalDateTime> gettingWateringDates(int id) {
-        var dmp = new DataManagerPlants();
 
         var repeatTimes = 55;
 
@@ -134,6 +133,7 @@ public class DataManagerGarden {
                 ).collect(Collectors.toList());
 
         List<LocalDateTime> repDate = new ArrayList<>();
+
         for (int i = 0; i < startDate.size(); i++) {
             var stDate = startDate.get(i);
             var day = dayCount.get(i);
@@ -147,6 +147,31 @@ public class DataManagerGarden {
         return repDate;
     }
 
+    public List<WateringEventModel> repDatesForCalendar(int id) {
+
+        var repeatTimes = 55;
+
+        var myGarden = getGarden().stream().
+                filter(g -> (g.getUserId().equals(id)))
+                .collect(Collectors.toList());
+
+        var startDate = myGarden.stream()
+                .map(Garden::getWaterDate).collect(Collectors.toList());
+
+        var dayCount = myGarden.stream()
+                .map(w -> (w.getPlant().getWatering())
+                ).findFirst().toString();
+
+        List<WateringEventModel> repDate = new ArrayList<>();
+
+        var allDay = "true";
+
+        var wateringDate = myGarden.stream()
+                .map(p -> new WateringEventModel(p.getPlant().getName().toString(), (p.getWaterDate().plusDays(Integer.parseInt(dayCount))).toString(), allDay)).collect(Collectors.toList());
+
+
+        return wateringDate;
+    }
 
     public List<WateringEventModel> getCalendarDataForJson(int id) {
 

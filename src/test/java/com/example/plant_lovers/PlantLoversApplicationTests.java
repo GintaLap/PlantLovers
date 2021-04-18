@@ -113,4 +113,11 @@ class PlantLoversApplicationTests {
         Assert.isTrue(res.size() > 0);
         System.out.println(res);
     }
+    @Test
+    public void getting_rep_calendar_data(){
+        var dmg = new DataManagerGarden();
+        var res = dmg.repDatesForCalendar(20);
+        Assert.isTrue(res.size() > 0);
+        System.out.println(res);
+    }
 }

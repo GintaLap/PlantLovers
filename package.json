@@ -1,0 +1,11 @@
+{
+  "name": "plant_lovers",
+  "version": "1.0.0",
+  "dependencies": {
+    "@fullcalendar/core": "^5.6.0",
+    "@fullcalendar/daygrid": "^5.6.0"
+  },
+  "devDependencies": {
+    "@fullcalendar/rrule": "^5.6.0"
+  }
+}

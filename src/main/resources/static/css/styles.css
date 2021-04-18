@@ -7,30 +7,57 @@
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+.containerHomepage {
+    position: relative;
+    text-align: center;
+    color: whitesmoke;
+}
 
-.homepage {
-
-    background-image: url("https://64.media.tumblr.com/bdc1841b5640a396d97cb360f26827b7/d98c99da1f41dde3-a6/s1025x683/40c35c5a7ec94f0ec9225e1bd84c0aaf29a86179.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: right top;
-    background-size: cover;
-    /*background-image: url('static/img/bakcground.jpg');*/
-    font-family: sans-serif;
-    margin-top: 50px;
-    padding: 30px;
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 900;
+    margin: -50px;
+    border: 20px;
+    text-shadow: 1px 1px #49654C;
+    font-size: 80px;
+    padding: 0px;
+    color: whitesmoke;
+}
+.centeredP {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin:  30px;
+    padding: 0px;
+    font-size: 30px;
+    text-shadow: 1px 1px #49654C;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    vertical-align: baseline;
+    background: 0 0;
+    color: whitesmoke;
+}
+.homepageB{
+    position: absolute;
+    color: #EBEBE9;
+    background-color: #49654C;
+    padding: 7px 10px 7px 10px;
+    border-radius: 4px;
+    border: 0px;
 }
 
 body {
+
     line-height: 1.6;
     letter-spacing: 1.1px;
     margin: 0;
     height: 100%;
     flex: 1 0 auto;
     background-color: #EBEBE9;
-    /*background-image: url('static/img/bakcground.jpg');*/
-    /*background-image: url('static/img/bakcground.jpg');*/
-    /*background-repeat: no-repeat;*/
     /*background-attachment: fixed;*/
     /*background-position: right top;*/
     /*background-size: cover;*/
@@ -304,4 +331,8 @@ input[type=submit] {
 
 .year {
     text-align: left;
+}
+.about{
+    height: auto;
+    width: 100%;
 }
