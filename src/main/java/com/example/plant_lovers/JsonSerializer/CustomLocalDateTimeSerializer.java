@@ -1,4 +1,4 @@
-package com.example.plant_lovers;
+package com.example.plant_lovers.JsonSerializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -21,13 +21,11 @@ public class CustomLocalDateTimeSerializer extends StdSerializer<LocalDateTime> 
 
     @Override
     public void serialize(LocalDateTime localDateTime, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Date date = java.sql.Timestamp.valueOf(localDateTime);
 
         var str = formatter.format(date);
-
-        var str2 = localDateTime.toString();
 
         jsonGenerator.writeString(str);
     }

@@ -1,4 +1,4 @@
-package com.example.plant_lovers;
+package com.example.plant_lovers.JsonSerializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;

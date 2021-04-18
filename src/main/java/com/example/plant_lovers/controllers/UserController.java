@@ -5,31 +5,17 @@ import com.example.plant_lovers.data.*;
 import com.example.plant_lovers.dto.GardenDTO;
 import com.example.plant_lovers.dto.UserDTO;
 import com.example.plant_lovers.models.AddGardenModel;
-
-import com.example.plant_lovers.models.WateringModel;
 import com.example.plant_lovers.security.Password;
-
 import com.google.gson.Gson;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -65,6 +51,7 @@ public class UserController {
         }
 
         var myPlants = dmg.getYourPlants(user.getId());
+        dmg.saveToJason(user.getId());
 
         request.getSession().setAttribute(SessionData.User, user);
         model.addAttribute("user", user);
@@ -112,6 +99,7 @@ public class UserController {
 
         var myPlants = dmg.getYourPlants(user.getId());
 
+
         model.addAttribute("user", user);
         model.addAttribute("myPlants", myPlants);
 
@@ -153,6 +141,8 @@ public class UserController {
         var gardenToAdd = new Garden(0, user.getId(), LocalDateTime.now(), plant);
         dmg.addGarden(gardenToAdd);
 
+        dmg.saveToJason(user.getId());
+
         model.addAttribute("plant", plant);
         model.addAttribute("garden", gardenToAdd);
         model.addAttribute("GardenDTO", gDto);
@@ -188,6 +178,7 @@ public class UserController {
         var rGardenId = removeGarden.get().getId();
         dmg.deleteGarden(rGardenId);
 
+        dmg.saveToJason(user.getId());
 
         model.addAttribute("user", user);
         model.addAttribute("GardenDTO", gDto);
@@ -196,11 +187,11 @@ public class UserController {
     }
 
 
-
-    @RequestMapping(value = "/calendar", method= RequestMethod.GET)
-    public ModelAndView getCalendar() {
-
+    @GetMapping(value = "/calendar")
+    public ModelAndView getCalendar(HttpSession session) {
+        var user = (User) session.getAttribute(SessionData.User);
         ModelAndView modelAndView = new ModelAndView("calendar");
+
 
         return modelAndView;
     }
@@ -208,7 +199,7 @@ public class UserController {
     @RequestMapping(value = "/calendar/dates", method = RequestMethod.GET)
     public
     @ResponseBody
-    String plantCalendar(HttpSession session, HttpServletResponse response) {
+    String plantCalendar(HttpSession session, HttpServletResponse response) throws IOException {
         var user = (User) session.getAttribute(SessionData.User);
 
         var dmg = new DataManagerGarden();
@@ -217,42 +208,17 @@ public class UserController {
                 .collect(Collectors.toList());
 
 
-        var wateringDate = myGarden.stream()
-                .map(p -> new WateringModel(p.getPlant().getName(), p.getWaterDate())).collect(Collectors.toList());
-
-        var plantN = myGarden.stream().map(p -> (p.getPlant().getName())).collect(Collectors.toList());
-
-        var startDate = myGarden.stream().map(Garden::getWaterDate).collect(Collectors.toList());
-
-
-        Map<String, String> map = new HashMap<String, String>();
-
-
-        for (var plant:plantN) {
-            map.put("title", plant);
-        }
-        for (var date: startDate) {
-            map.put("start", String.valueOf(date));
-        }
-
-//        for (int i = 0; i < plantN.size(); i++) {
-//            map.put("title", plantN);
-//        }
-//        for (int i = 0; i < startDate.size(); i++) {
-//            map.put("start", startDate);
-//        }
-
+        var l = dmg.getCalendarDataForJson(user.getId());
 
         // Convert to JSON string.
-        String json = new Gson().toJson(map);
+        String json = new Gson().toJson(l);
 
         // Write JSON string.
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-      return json;
-  }
-
+        return json;
+    }
 }
 
 

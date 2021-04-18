@@ -1,16 +1,33 @@
 [ {
-  "plantName" : "Zebra Plant",
-  "waterDate" : "2021-04-13 00:00:00+0300"
+  "title" : "Zebra Plant",
+  "start" : "2021-04-13T00:00",
+  "allDay" : "true"
 }, {
-  "plantName" : "Jasmine",
-  "waterDate" : "2021-04-13 00:00:00+0300"
+  "title" : "Jasmine",
+  "start" : "2021-04-13T00:00",
+  "allDay" : "true"
 }, {
-  "plantName" : "Rosemary",
-  "waterDate" : "2021-04-13 00:00:00+0300"
+  "title" : "Rosemary",
+  "start" : "2021-04-13T00:00",
+  "allDay" : "true"
 }, {
-  "plantName" : "House Leek",
-  "waterDate" : "2021-04-13 00:00:00+0300"
+  "title" : "House Leek",
+  "start" : "2021-04-13T00:00",
+  "allDay" : "true"
 }, {
-  "plantName" : "Zebra Plant",
-  "waterDate" : "2021-04-14 00:00:00+0300"
+  "title" : "Zebra Plant",
+  "start" : "2021-04-14T00:00",
+  "allDay" : "true"
+}, {
+  "title" : "Umbrella Plant",
+  "start" : "2021-04-17T00:32:12",
+  "allDay" : "true"
+}, {
+  "title" : "Parlor Palm",
+  "start" : "2021-04-18T02:14:42",
+  "allDay" : "true"
+}, {
+  "title" : "Arrowhead Plant",
+  "start" : "2021-04-18T02:29:04",
+  "allDay" : "true"
 } ]

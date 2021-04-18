@@ -14,8 +14,10 @@
 </head>
 <body>
 <div th:replace="navigation :: navigation"></div>
+<section class="intro">
+    <h2 class="login_h2">Log in</h2>
+</section>
 
-<h2 class="login_h2">Log in</h2>
 <div class="container" style="font-family: 'playfair_displayregular'">
     <div class="row align-items-center">
 <!--        <div class="col">-->
@@ -41,8 +43,10 @@
         </div>
     </div>
 </div>
+<section class="intro">
+    <h2 class="login_h2">Create new account</h2>
+</section>
 
-<h2 class="login_h2">Create new account</h2>
 <div class="container" style="font-family: 'playfair_displayregular'">
     <form name="dto" id="dto" action="/process_register"
           method="post" style="max-width: 600px; margin: 0 auto;">

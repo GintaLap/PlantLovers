@@ -1,15 +1,12 @@
 package com.example.plant_lovers;
 
-import com.example.plant_lovers.controllers.UserController;
+
 import com.example.plant_lovers.data.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @SpringBootTest
 class PlantLoversApplicationTests {
@@ -83,21 +80,37 @@ class PlantLoversApplicationTests {
        System.out.println(myPlants);
    }
 
-    @Test
-    public void check_watering_dates(){
-        var dmg = new DataManagerGarden();
-        int id = 17;
 
-        var myPlants = dmg.getDateAndPlant(id);
-        Assert.isTrue(myPlants.size() > 0);
-        System.out.println(myPlants);
-    }
     @Test
     public void save_dates_to_json(){
         var dmg = new DataManagerGarden();
         int id = 17;
-        var myPlants = dmg.getDateAndPlant(id);
-        dmg.saveToJason(myPlants);
+        var myPlants = dmg.getCalendarDataForJson(id);
+        dmg.saveToJason(id);
 
+    }
+
+    @Test
+    public void getting_watering_date() {
+        var dmg = new DataManagerGarden();
+        var res = dmg.gettingWateringDates((1));
+        Assert.isTrue(res.size() > 0);
+        System.out.println(res);
+    }
+
+    @Test
+    public void getting_rep_dates(){
+        var dmg = new DataManagerGarden();
+        var res = dmg.gettingWateringDates(20);
+        Assert.isTrue(res.size() > 0);
+        System.out.println(res);
+    }
+
+    @Test
+    public void getting_calendar_data_from_json(){
+        var dmg = new DataManagerGarden();
+        var res = dmg.getCalendarDataForJson(20);
+        Assert.isTrue(res.size() > 0);
+        System.out.println(res);
     }
 }
