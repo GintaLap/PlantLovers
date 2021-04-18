@@ -16,9 +16,8 @@
     background-position: right top;
     background-size: cover;
     /*background-image: url('static/img/bakcground.jpg');*/
-    background-size: cover;
     font-family: sans-serif;
-    margin-top: 80px;
+    margin-top: 50px;
     padding: 30px;
 }
 
@@ -35,6 +34,11 @@ body {
     /*background-attachment: fixed;*/
     /*background-position: right top;*/
     /*background-size: cover;*/
+}
+
+.gardenButtons{
+    float: left;
+    margin: 7px;
 }
 
 /* HEADER */
@@ -106,7 +110,7 @@ a:active {
 /* INTRO */
 .intro {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     flex-direction: column;
     padding: 0 30px;
@@ -243,6 +247,7 @@ input[type=submit] {
 .container {
     background-color: #f1f1f1;
     padding: 20px;
+    border-radius: 10px;
 }
 
 /* The message box is shown when the user clicks on the password field */
@@ -294,6 +299,7 @@ input[type=submit] {
 
 .created {
     text-align: right;
+    font-family: 'playfair_displayregular'
 }
 
 .year {

@@ -14,13 +14,17 @@
             <h1 class="heading">Your garden</h1>
 
             <h1>Modify your lovely garden...</h1>
+            <div>
             <div class="gardenButtons">
                 <a th:href="@{add_garden}">
-                    <button>Add plants</button>
+                    <button class="btn-first-page">Add plants</button>
                 </a>
+            </div>
+            <div class="gardenButtons">
                 <a th:href="@{delete_garden}">
-                    <button>Delete plants</button>
+                    <button class="btn-first-page">Delete plants</button>
                 </a>
+            </div>
             </div>
             <h1>See plant watering schedule...</h1>
 
@@ -34,7 +38,7 @@
 
 
             <a th:href="@{calendar}">
-                <button>View Calendar</button>
+                <button class="btn-first-page">View Calendar</button>
             </a>
             <h2>Check out your garden:</h2>
             <section class="garden-container">
@@ -78,6 +82,8 @@
     </section>
 </main>
 <div style="margin-bottom: 20px">
+    <a href="/your_garden" style="font-size: large; color: green; margin-left: 58px"><b>Go Up!</b></a>
+    <br>
     <br>
 <footer th:replace="footer :: footer">...</footer>
 </div>
