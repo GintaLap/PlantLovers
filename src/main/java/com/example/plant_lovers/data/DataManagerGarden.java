@@ -2,7 +2,6 @@ package com.example.plant_lovers.data;
 
 
 import com.example.plant_lovers.models.WateringEventModel;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -17,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -192,21 +190,26 @@ public class DataManagerGarden {
 //    }
 
   // FOR GETTING JSON FILE CORRECT READING:
-    public List<WateringEventModel> getCalendarDataForJson(int id) {
+    public List getCalendarDataForJson(int id) {
 
         var myGarden = getGarden().stream().
                 filter(g -> (g.getUserId().equals(id)))
                 .collect(Collectors.toList());
         var allDay = "true";
 
+        var plantN = myGarden.stream().map(p -> (p.getPlant().getName())).collect(Collectors.toList());
+
         var dateList = gettingWateringDates(id);
 
-       List updDates = new ArrayList<>();
+       List <Object>updDates = new ArrayList<>();
         for (var date : dateList) {
-            var wateringDate = myGarden.stream()
-                    .map(p -> new WateringEventModel(p.getPlant().getName(),
-                            date.toString(), allDay)).collect(Collectors.toList());
-                updDates.add(wateringDate);
+
+                var wateringDate = myGarden.stream()
+                        .map(p -> new WateringEventModel(p.getPlant().getName(),
+                                date.toString(), allDay)).collect(Collectors.toList());
+            for (var wMod: wateringDate) {
+                updDates.add(wMod);
+            }
         }
         return updDates;
     }

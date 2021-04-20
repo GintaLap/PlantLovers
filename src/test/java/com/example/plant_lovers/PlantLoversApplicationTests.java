@@ -84,7 +84,7 @@ class PlantLoversApplicationTests {
     @Test
     public void save_dates_to_json(){
         var dmg = new DataManagerGarden();
-        int id = 17;
+        int id = 29;
         var myPlants = dmg.getCalendarDataForJson(id);
         dmg.saveToJason(id);
 
