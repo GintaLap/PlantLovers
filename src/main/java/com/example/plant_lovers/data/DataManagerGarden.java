@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -170,12 +171,27 @@ public class DataManagerGarden {
 
 
 
-
         return wateringDate;
 
     }
 
+// ORIGINAL:
+//    public List<WateringEventModel> getCalendarDataForJson(int id) {
+//
+//        var myGarden = getGarden().stream().
+//                filter(g -> (g.getUserId().equals(id)))
+//                .collect(Collectors.toList());
+//        var allDay = "true";
+//
+//        var wateringDate = myGarden.stream()
+//                .map(p -> new WateringEventModel(p.getPlant().getName(), p.getWaterDate().toString()
+//                        , allDay)).collect(Collectors.toList());
+//
+//        return wateringDate;
+//
+//    }
 
+  // FOR GETTING JSON FILE CORRECT READING:
     public List<WateringEventModel> getCalendarDataForJson(int id) {
 
         var myGarden = getGarden().stream().
@@ -183,13 +199,18 @@ public class DataManagerGarden {
                 .collect(Collectors.toList());
         var allDay = "true";
 
-        var wateringDate = myGarden.stream()
-                .map(p -> new WateringEventModel(p.getPlant().getName(), p.getWaterDate().toString()
-                        , allDay)).collect(Collectors.toList());
+        var dateList = gettingWateringDates(id);
 
-        return wateringDate;
-
+       List updDates = new ArrayList<>();
+        for (var date : dateList) {
+            var wateringDate = myGarden.stream()
+                    .map(p -> new WateringEventModel(p.getPlant().getName(),
+                            date.toString(), allDay)).collect(Collectors.toList());
+                updDates.add(wateringDate);
+        }
+        return updDates;
     }
+
 
     public void saveToJason(int id) {
         ObjectMapper mapper = new ObjectMapper();
