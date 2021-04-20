@@ -147,31 +147,34 @@ public class DataManagerGarden {
         return repDate;
     }
 
-    public List<WateringEventModel> repDatesForCalendar(int id) {
+    public List<WateringEventModel> getRepCalendarDataForJson(int id) {
+        var repeatTimes = 20;
+        List<WateringEventModel> wateringDate = new ArrayList<>();
 
-        var repeatTimes = 55;
+        for (int i = 0; i < repeatTimes; i++) {
+            var myGarden = getGarden().stream().
+                    filter(g -> (g.getUserId().equals(id)))
+                    .collect(Collectors.toList());
 
-        var myGarden = getGarden().stream().
-                filter(g -> (g.getUserId().equals(id)))
-                .collect(Collectors.toList());
+            var allDay = "true";
 
-        var startDate = myGarden.stream()
-                .map(Garden::getWaterDate).collect(Collectors.toList());
+            var start =  myGarden.get(id).getWaterDate().plusDays(myGarden.get(id).getPlant().getWatering()).toString();
+            var waterM = new WateringEventModel(myGarden.get(id).getPlant().getName(),start, allDay);
+            if(start == start){
+                start=myGarden.get(id).getWaterDate().plusDays(myGarden.get(id).getPlant().getWatering()).toString();
+            }
 
-        var dayCount = myGarden.stream()
-                .map(w -> (w.getPlant().getWatering())
-                ).findFirst().toString();
 
-        List<WateringEventModel> repDate = new ArrayList<>();
+            wateringDate.add(waterM);
+        }
 
-        var allDay = "true";
 
-        var wateringDate = myGarden.stream()
-                .map(p -> new WateringEventModel(p.getPlant().getName().toString(), (p.getWaterDate().plusDays(Integer.parseInt(dayCount))).toString(), allDay)).collect(Collectors.toList());
 
 
         return wateringDate;
+
     }
+
 
     public List<WateringEventModel> getCalendarDataForJson(int id) {
 
@@ -181,10 +184,11 @@ public class DataManagerGarden {
         var allDay = "true";
 
         var wateringDate = myGarden.stream()
-                .map(p -> new WateringEventModel(p.getPlant().getName(), p.getWaterDate().toString(), allDay)).collect(Collectors.toList());
-
+                .map(p -> new WateringEventModel(p.getPlant().getName(), p.getWaterDate().toString()
+                        , allDay)).collect(Collectors.toList());
 
         return wateringDate;
+
     }
 
     public void saveToJason(int id) {

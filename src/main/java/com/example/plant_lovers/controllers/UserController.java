@@ -25,6 +25,7 @@ public class UserController {
     private DataManagerUser dm;
     private DataManagerGarden dmg;
     private DataManagerPlants dmp;
+    private static final String FILE_PATH = "src/main/resources/calendar_data.json";
 
     public UserController() {
         dm = new DataManagerUser();

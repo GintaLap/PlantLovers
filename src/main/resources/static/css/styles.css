@@ -26,12 +26,13 @@
     padding: 0px;
     color: whitesmoke;
 }
+
 .centeredP {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    margin:  30px;
+    margin: 30px;
     padding: 0px;
     font-size: 30px;
     text-shadow: 1px 1px #49654C;
@@ -41,7 +42,8 @@
     background: 0 0;
     color: whitesmoke;
 }
-.homepageB{
+
+.homepageB {
     position: absolute;
     color: #EBEBE9;
     background-color: #49654C;
@@ -63,7 +65,7 @@ body {
     /*background-size: cover;*/
 }
 
-.gardenButtons{
+.gardenButtons {
     float: left;
     margin: 7px;
 }
@@ -176,10 +178,6 @@ a:active {
     width: 100%;
 }
 
-/*.gardenPlants {*/
-/*    max-height: 700px;*/
-/*}*/
-
 .gardenPlants .image {
     width: 250px;
     height: 250px;
@@ -216,10 +214,6 @@ a:active {
     margin: auto;
 }
 
-
-/*.plant {*/
-/*    max-height: 700px;*/
-/*}*/
 
 img {
     border-radius: 10px;
@@ -332,7 +326,15 @@ input[type=submit] {
 .year {
     text-align: left;
 }
-.about{
+
+.about {
     height: auto;
     width: 100%;
+}
+
+section .aboutText {
+    padding: 20px;
+    margin: 20px;
+    border: 40px;
+    text-align: center;
 }

@@ -116,7 +116,7 @@ class PlantLoversApplicationTests {
     @Test
     public void getting_rep_calendar_data(){
         var dmg = new DataManagerGarden();
-        var res = dmg.repDatesForCalendar(20);
+        var res = dmg.getRepCalendarDataForJson(20);
         Assert.isTrue(res.size() > 0);
         System.out.println(res);
     }
