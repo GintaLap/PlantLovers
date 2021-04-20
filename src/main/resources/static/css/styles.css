@@ -332,9 +332,10 @@ input[type=submit] {
     width: 100%;
 }
 
-section .aboutText {
+section.aboutText {
     padding: 20px;
-    margin: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
     border: 40px;
-    text-align: center;
+    text-align: justify;
 }
